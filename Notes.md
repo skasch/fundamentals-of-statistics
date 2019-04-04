@@ -292,7 +292,7 @@ A test $\psi$ has **asymptotic level $\alpha$** if:
 
 $$\tag{2.17} \forall \theta \in \Theta_0, \limn \alpha_{\psi_n}(\theta) \leq \alpha$$
 
-In general, a test has the form 
+In general, a test has the form
 
 $$\psi = \one\{T_n > c\}$$
 
@@ -615,6 +615,378 @@ then $\est{\mmu}$ satisfies:
 $$\tag{3.32} \est{\mmu} \convp \true\mmu$$
 
 $$\tag{3.33} \sqrt{n}(\est{\mmu} - \true\mmu) \convd \Norm_d(\zz, J^{-1}(\true\mmu)^TK(\true\mmu)J^{-1}(\true\mmu))$$
+
+## Unit 4: Hypothesis testing
+
+### Lecture 13: Chi Squared Distribution, T-Test
+
+Our previous tests were based on the CLT and Slutsky.
+
+* What if Slutsky does not apply?
+* Can we use asymptotic normality of the MLE?
+* How about tests with multivariate parameters (e.g. $\theta_1 = \theta_2$)?
+* Can we more general tests, such as "is my distribution Gaussian"?
+
+Example: Pharmaceutical company wants to test if a new drug is efficient. They administer a drug to a group of patients (test group) and a placebo to another (control group). We want to test if the drugs lowers LDL (bad cholersterol) among patients with a high level of LDL.
+
+* Let $\Delta_d > 0$ denote the expected decrease of LDL level for a patient in the test group.
+* Let $\Delta_c \geq 0$ denote the expected decrease of LDL level for a patient in the control group.
+* We want to know if $\Delta_d > \Delta_c$; we observe:
+  * $X_1, \ldots, X_n \iid \Norm(\Delta_d, \sigma_d^2)$ from the test group,
+  * $Y_1, \ldots, Y_m \iid \Norm(\Delta_c, \sigma_c^2)$ from the control group.
+
+Our hypothesis testing is:
+
+$$H_0: \Delta_c \leq \Delta_d, H_1: \Delta_d > \Delta_c$$
+
+As the data is Gaussian,
+
+$$\bar{X}_n \sim \Norm\left(\Delta_d, \frac{\sigma_d^2}n\right), \bar{Y}_m \sim \Norm\left(\Delta_c, \frac{\sigma_c^2}m\right)$$
+
+Therefore,
+
+$$\frac{\bar{X}_n - \bar{Y}_m - (\Delta_d - \Delta_c)}{\sqrt{\sigma_d^2/n + \sigma_c^2/m}} \sim \Norm(0, 1)$$
+
+Using Slutsky,
+
+$$\frac{\bar{X}_n - \bar{Y}_m - (\Delta_d - \Delta_c)}{\sqrt{\hat{\sigma}_d^2/n + \hat{\sigma}_c^2/m}} \sim \Norm(0, 1)$$
+
+Where
+
+$$\hat{\sigma}^2_d = \frac1{n-1}\sum_{i=1}^n(X_i-\bar{X}_n)^2, \hat{\sigma}^2_c = \frac1{m-1}\sum_{i=1}^m(Y_i-\bar{Y}_m)^2$$
+
+Therefore, the test with asymptotic level $\alpha$ is given by:
+
+$$R_\psi = \left\{\frac{\bar{X}_n - \bar{Y}_m}{\sqrt{\hat{\sigma}^2_d/n + \hat{\sigma}^2_c/m}} > q_\alpha\right\}$$
+
+If $n, m$ are small, we cannot realistically apply Slutsky.
+
+Let $d \in \N$.
+
+**The $\chi^2$ distribution** with $d$ degrees of freedom is the law of the random variable
+
+$$\tag{4.1}Z_1^2 + Z_2^2 + \ldots + Z_d^2$$
+
+where $Z_1, \ldots, Z_d \iid \Norm(0, 1)$.
+
+If $Z \sim \Norm_d(0, I_d)$, then $\|Z\|^2_n \sim \chi^2_d$.
+
+$\chi^2_2 = \mathcal{Exp}(1/2)$.
+
+If $V \sim \chi^2_k$, then:
+
+* $\E[V] = \E[Z_1^2] + \ldots + \E[Z_d^2] = d$
+* $\V[V] = \V[Z_1^2] + \ldots + \E[Z_d^2] = 2d$
+
+**Cochran's Theorem**: for $X_1, \ldots, X_n \iid \Norm(\mu, \sigma^2)$, if $S_n$ is the sample variance defined as
+
+$$\tag{4.2}S_n = \frac1n\sum_{i=1}^n(X_i - \bar{X}_n)^2 = \frac1n\sum_{i=1}^nX_i^2 - \bar{X}_n^2$$
+
+then:
+
+$$\tag{4.3} \bar{X}_n \perp\!\!\!\perp S_n$$
+
+$$\tag{4.4} \frac{nS_n}{\sigma^2} \sim \chi^2_{n-1}$$
+
+We often prefer the unbiased estimator of $\sigma^2$:
+
+$$\tag{4.5} \tilde{S}_n = \frac1{n-1}\sum_{i=1}^n(X_i - \bar{X}_n)^2 = \frac{n}{n-1}S_n$$
+
+Which satisfies:
+
+$$\E[\tilde{S}_n] = \frac{n}{n-1}\E\left[\frac{\sigma^2}n\chi^2_{n-1}\right] = \frac{n}{n-1}\sigma^2\fra{n-1}n = \sigma^2$$
+
+Let $d \in \N$.
+
+**The Student's T distribution $t_d$** with $d$ degrees of freedom is the law of the random variable
+
+$$\tag{4.6}\frac{Z}{\sqrt{V/d}}$$
+
+where $Z \sim \Norm(0, 1), V \sim \chi_d^2$, and $Z \perp\!\!\!\perp V$.
+
+**Student's T test (one sample, two-sided)**: let $X_1, \ldots, X_n \iid \Norm(\mu, \sigma^2)$, where $\mu, \sigma^2$ are unknown. We want to test:
+
+$$H_0: \mu = 0, H_1: \mu \neq 0$$
+
+The test statistic is given by:
+
+$$T_n =\frac{\bar{X}_n}{\sqrt{\bar{S}_n / n}} =  \frac{\displaystyle \sqrt{n}\frac{\bar{X}_n - \overbrace{\mu}^{0}}{\sigma}}{\sqrt{\tilde{S}_n/\sigma^2}}$$
+
+Since $\sqrt{n}\bar{X}_n/\sigma \sim \Norm(0, 1)$ and $\tilde{S}_n/\sigma^2 \sim \frac1{n-1}\chi^2_{n-1}$ are independent by Cochan's theorem, we have:
+
+$$\tag{4.7}T_n \sim t_{n-1}$$
+
+The Student's test with level $\alpha \in (0, 1)$ is given by:
+
+$$\tag{4.8}\psi_\alpha = \one\{|T_n| > q_{\alpha/2}\}$$
+
+where $q_{\alpha/2}$ is the $(1 - \alpha/2)$-quantile of $t_{n-1}$.
+
+**Student's T test (one sample, one-sided)**: we want to test:
+
+$$H_0: \mu \leq \mu_0, H_1: \mu > \mu_0$$
+
+The test statistic is
+
+$$T_n = \frac{\bar{X}_n - \mu_0}{\sqrt{\tilde{S}_n}} \sim t_{n-1}$$
+
+The Student's test with level $\alpha \in (0, 1)$ is given by:
+
+$$\tag{4.9}\psi_\alpha = \one\{T_n > q_\alpha\}$$
+
+where $q_\alpha$ is the $(1-\alpha)$-quantile of $t_{n-1}$.
+
+**Two samples Student's T test**. We want to know the distribution of:
+
+$$
+**The Welch-Satterthwaite formula**. We have approximately:
+$$
+
+where
+
+$$N = \frac{\displaystyle\left(\frac{\hat{\sigma}^2_d}{n} + \frac{\hat{\sigma}^2_d}{m}\right)^2}{\displaystyle \frac{\hat{\sigma}^4_d}{n^2(n-1)} + \frac{\hat{\sigma}^4_c}{m^2(m-1)}} \geq \min(n, m)$$
+
+The Student's T test can be used for any size of samples, even for very small samples; however, it relies on the assumption that the sample is Gaussian.
+
+### Lecture 14: ????
+
+Let us consider an i.i.d sample $X_1, \ldots, X_n$ with statistical model $\statmodel$, where $\Theta \subseteq \R^d, d \geq 1$. Let $\ttheta_0 \in \Theta$ fixed and given, and let $\ttth$ be the true parameter. Let us consider the hypotheses:
+
+$$H_0: \ttth = \ttheta_0, H_1: \ttth \neq \ttheta_0$$
+
+Let $\thn^{MLE}$ be the MLE, with some technical conditions satisfied. If $H_0$, then:
+
+$$\left.\begin{array}{r} \sqrt{n}I(\ttheta_0)^{1/2} \\ \sqrt{n}I(\ttth)^{1/2} \\ \sqrt{n}I(\tthn^{MLE})^{1/2} \end{array}\right\} \times (\tthn^{\MLE} - \ttheta_0) \convd \Norm_d(\zz, I_d)$$
+
+Hence,
+
+$$\tag{4.10}T_n = n(\tthn^{MLE} - \ttheta_0)^TI(\tthn^{MLE})(\tthn^{MLE} - \ttheta_0) \convd \chi^2_d$$
+
+**The Wald's test** with asymptotic level $\alpha \in (0, 1)$ is given by:
+
+$$\tag{4.11}\psi_\alpha = \one\{T_n > q_\alpha\}$$
+
+where $q_\alpha$ is the $(1-\alpha)$-quantile of $\chi_d^2$.
+
+Wald's test is also valid if $H_1$ has the form $\theta > \theta_0$, $\theta < \theta0$ or $\theta = \theta_1$ but is less powerful in that case.
+
+Let $X_1, \ldots, X_n$ be an i.i.d sample for the statistical model $\statmodel$, where $\Theta \subseteq \R^d, d \geq 1$. Suppose:
+
+$$H_0: (\theta_{r+1}, \ldots, \theta_d) = (\theta^{(0)}_{r+1}, \ldots, \theta^{(0)}_{d})$$
+
+for some fixed $\ttheta^{(0)} \in \R^{d-r}$. Let
+
+$$\tthn = \argmax{\ttheta \in \Theta}\ell_n(\ttheta)$$
+
+and
+
+$$\tag{4.12}\tthn^c = \argmax{\ttheta \in \Theta_0}\ell_n(\ttheta)$$
+
+the constrained MLE extimator, where $\Theta_0 = \{\ttheta \in \Theta, \ttheta_{r+1\ldots d} = \ttheta^{(0)}\}$.
+
+**The likelihood ratio test** is given by the test statistic:
+
+$$\tag{4.13} T_n = 2(\ell_n(\tthn) - \ell_n(\tthn^c))$$
+
+**Wilks' Theorem**: let us assume $H_0$, and some MLE technical conditions. Then:
+
+$$\tag{4.14}T_n \convd \chi^2_{d-r}$$
+
+The likelihood ratio test with asymptotic level $\alpha \in (0, 1)$ is given by:
+
+$$\tag{4.15}\psi_\alpha = \one\{T_n > q_\alpha\}$$
+
+where $q_\alpha$ is the $(1-\alpha)$-quantile of $\chi^2_{d-r}$.
+
+**Implicit hypotheses**: let $X_1, \ldots, X_n \iid \P$, and let $\ttheta \in \R^d$ be a parameter associated with $\P$. Let $g: \R^d \rightarrow \R^k$ be continuously differentiable, with $k \leq d$. Let us consider:
+
+$$H_0: g(\ttheta) = \zz, H_1: g(\ttheta) \neq \zz$$
+
+Let us assume we have an asymptotical norma estimator $\tthn$:
+
+$$\sqrt{n}(\tthn - \ttheta) \convd \Norm_d(0, \SSigma(\ttheta))$$
+
+Using the delta method,
+
+$$\sqrt{n}(g(\tthn) - g(\ttheta)) \convd \Norm_k(\zz, \Gamma(\ttheta))$$
+
+where $\Gamma(\ttheta) = \Nabla g(\ttheta)^T\SSigma(\ttheta)\Nabla g(\ttheta) \in \R^{k\times k}$. If $\SSigma(\ttheta)$ is invertible and $\Nabla g(\ttheta)$ has rank $k$, then $\Gamma(\ttheta)$ is invertible and
+
+$$\tag{4.16}\sqrt{n}\Gamma(\ttheta)^{-1/2}(g(\tthn) - g(\ttheta)) \convd \Norm_k(\zz, I_k)$$
+
+Then, by applying the Slutsky theorem, if $\Gamma(\ttheta)$ is continuous, then
+
+$$\sqrt{n}\Gamma(\tthn)^{-1/2}(g(\tthn) - g(\ttheta)) \convd \Norm_k(\zz, I_k)$$
+
+Hence, if $H_0$ is true, then:
+
+$$\tag{4.17}T_n = ng(\tthn)^T\Gamma(\tthn)^{-1}g(\tthn) \convd \chi^2_k$$
+
+The test with asymptotic level $\alpha \in (0, 1)$ is therefore given by:
+
+$$\tag{4.18} \psi_\alpha = \one\{T_n > q_\alpha\}$$
+
+where $q_\alpha$ is the $(1-\alpha)$-quantile of $\chi^2_k$.
+
+### Lecture 15: ????
+
+Let $X$ be a r.v. Given i.i.d copies of $X$, we want to answer the following type of questions:
+
+* Does $X$ have a normal distribution?
+* Does $X$ have a uniform distribution?
+* Does $X$ have *this* PMF?
+
+This class of questions is called **goodness of fit (GoF)** tests: we want to know if the hypothesized distribution is a good fit for the data.
+
+let $E = \{a_1, \ldots, a_K\}$ be a finite space, and $(\P_\pp)_{\pp \in \Delta_K}$ the family of all probability distributions on $E$, where:
+
+$$\Delta_K = \left\{\pp \in (0, 1)^K, \sum_{i=1}^Kp_i = 1\right\}$$
+
+For $\pp \in \Delta_K$ and $X \sim \P_\pp$,
+
+$$\forall 1 \leq i \leq K, \P_\pp[X = a_i] = p_i$$
+
+Let $X_1, \ldots, X_n \iid \P_\pp$ for some unknown $\pp \in \Delta_k$, and let $\pp^0 \in \Delta_k$ be fixed. We want to test:
+
+$$H_0: \pp = \pp^0, H_1: \pp \neq \pp^0$$
+
+Le likelihood of the multinomial model is given by:
+
+$$\tag{4.19}L_n(x_1, \ldots, x_n, \pp) = \prod_{i=1}^Kp_i^{N_i}$$
+
+where $N_i = |\{X_j = a_i, 1 \leq j \leq n\}|$. Let $\est{\pp}$ be the MLE:
+
+$$(\est{\pp})_i = \frac{N_j}{n}$$
+
+However, $\est{\pp}$ maximizes $\ell_n$ **under the constraint** $\sum_i p_i = 1$.
+
+If $H_0$ is true, then $\sqrt{n}(\est{\pp} - \pp^0)$ is asymptotically normal, and the following holds:
+
+$$\sqrt{n}I(\pp^0)^{1/2}(\est{\pp} - \pp^0) \convd \Norm_{K-1}(0, I_{K-1})$$
+
+**Theorem**: under $H_0$,
+
+$$\tag{4.20}T_n = n\sum_{i=1}^K\frac{((\est{\pp})_i - \pp^0_i)^2}{\pp^0_i} \convd \chi^2_{K-1}$$
+
+The $\chi^2$ test with asymptotic level $\alpha$ is given by:
+
+$$\tag{4.21}\psi_\alpha = \one\{T_n > q_\alpha\}$$
+
+where $q_\alpha$ is the $(1-\alpha)$-quantile of $\chi^2_{K-1}$. The asymptotic p-value is given by:
+
+$$\tag{4.22} \P[Z > T_n | T_n]$$
+
+where $Z \sim \chi^2_{K-1}$ and $Z \perp\!\!\!\perp T_n$.
+
+Let $X_1, \ldots, X_n$ be i.i.d real random variables. The CDF of $X$ is defined as:
+
+$$\forall t \in \R, F(t) = \P[X \leq t]$$
+
+**It completely characterizes the distribution of $X$**.
+
+**The empirical CDF** of $X_1, \ldots, X_n$ is defined as:
+
+$$\tag{4.23}\begin{aligned}\displaystyle \forall t \in \R, F_n(t) &= \frac1n\sum_{i=1}^n\one\{X_i \leq t\} \\ &= \displaystyle \frac{|\{X_i \leq t, 1 \leq i \leq n\}|}n\end{aligned}$$
+
+By the LLN,
+
+$$\tag{4.24}F_n(t) \convas F(t)$$
+
+**Glivenko-Cantelli Theorem**:
+
+$$\tag{4.25}\sup_{t\in\R}|F_n(t)-F(t)| \convas 0$$
+
+By the CLT:
+
+$$\tag{4.26}\forall t \in \R, \sqrt{n}(F_n(t) - F(t)) \convd \Norm(0, F(t)(1-F(t)))$$
+
+**Donsker's Theorem**: if $F$ is continuous, then
+
+$$\tag{4.27}\sqrt{n}\sup_{t\in\R}|F_n(t) - F(t)| \convd \sup_{t \in [0, 1]}|\B(t)|$$
+
+where $\B$ is a Brownian bridge on $[0, 1]$.
+
+Let $X_1, \ldots, X_n$ be i.i.d real random variables with unknown CDF $F$ and let $F^0$ be a *continuous* CDF. Let us consider
+
+$$H_0: F = F^0, H_1: F \neq F^0$$
+
+Let $F_n$ be the empirical CDF of the sample $X_1, \ldots, X_n$. If $H_0$ is true, then $\forall t \in \R, F_n(t) \approx F^0(t)$.
+
+Let
+
+$$\tag{4.28}T_n = \sup_{t \in \R}\sqrt{n}|F_n(t) - F^0(t)|$$
+
+Then, by Donsker's theorem, if $H_0$ is rtue, then $T_n \convd Z$, where $Z$ has a known distribution, the supremum of an absolute Brownian bridge.
+
+### Lecture 16: ????
+
+**The Kolmogorov-Smirnov (*KS*) test** with asymptotic level $\alpha$ is given by:
+
+$$\tag{4.29}\delta_\alpha^{KS} = \one\{T_n > q_\alpha\}$$
+
+where $q_\alpha$ is the $(1-\alpha)$-quantile of $Z$. The p-value of the KS test is given by $\P[Z > T_n | T_n]$.
+
+In practice, how to compute $T_n$? The expression of $T_n$ reduces to the following formula:
+
+$$\tag{4.30}T_n = \sqrt{n}\max_{1 \leq i \leq n}\left\{\max\left(\left|\frac{i-1}n - F^0(X_{(i)})\right|, \left|\frac{i}n - F^0(X_{(i)})\right|\right)\right\}$$
+
+where $X_{(1)} \leq \ldots \leq X_{(n)}$ are the reordered samples.
+
+**$T_n$ is called a pivotal statistic**. If $H_0$ is true, the distribution of $T_n$ does not depend on the distribution of the $X_i$'s and it is easy to reproduce it in simulations. Indeed, let $U_i = F^0(X_i)$, and $G_n$ the empirical CDF of $U$. If $H_0$ is true, then
+
+$$U_1, \ldots, U_n \iid \mathcal{U}(0, 1), T_n = \sum_{x \in [0, 1]}\sqrt{n}|G_n(x) - x|$$
+
+Hence, for some large integer $M$:
+
+* simulate $M$ i.i.d copies $T^1_n, \ldots, T^M_n$ of $T_n$,
+* estimate the $(1-\alpha)$-quantile $q_\alpha^{(n)}$ of $T_n$ by taking the sample $(1-\alpha)$-quantile $\hat{q}_\alpha%{(n, M)}$ of $T^1_n, \ldots, T^M_n$,
+* Test with approximate level $\alpha$:
+
+$$\delta_\alpha \approx \one\{T_n > \hat{q}_\alpha%{(n, M)}}$$
+
+The p-value of the test is given by:
+
+$$\pval \approx \frac1M|\{T_n^i > T_n, 1 \leq i \leq M\}|$$
+
+We want to measure the distance between two functions $F_n(t)$ and $F(t)$:
+
+**Kolmogorov-Smirnov**:
+
+$$\tag{4.31}d(F_n, F) = \sup_{t\in\R}|F_n(t) - F(t)|$$
+
+**Cramér-Von Mises**:
+
+$$\tag{4.32}d^2(F_n, F) = \int_\R\left(F_n(t) - F(t)\right)^2dF(t) = \E_F[(F_n(X) - F(X))^2]$$
+
+**Anderson-Darling**:
+
+$$\tag{4.33}d^2(F_n, F) = \int_\R\frac{(F_n(t) - F(t))^2}{F(t)(1-F(t))}dF(t)
+
+If I want to test if $X$ has a Gaussian distribution, but without knowing the parameters, let us use plug-in:
+
+$$\tag{4.34}\sum_{t\in\R}|F_n(t) - \Phi_{\est{\mu}, \est{\sigma^2}}(t)|$$
+
+Where $\est{\mu} = \bar{X}_n$ and $\est{\sigma^2} = S_n^2$, and $\Phi_{\mu, \sigma^2}$ is the CDF of $\Norm(\mu, \sigma^2)$.
+
+In this case, **Donsker's theorem is no longer valid**. This is a very common and serious mistake!
+
+**Kolmogorov-Lilliefors test**: instead, we compute the quantils for the test statistic:
+
+$$\sum_{t\in\R}|F_n(t) - \Phi_{\est{\mu}, \est{\sigma^2}}(t)|$$
+
+They do not depend on unknown parameters!
+
+**Quantile-Quantile (*QQ*) plots**: they provide a visual way to perform G-F tests. It's a quick and easy check to see if a distribution is plausible. The main idea is to check visually if the plot of $F_n$ is close to that of $F$, or equivalently if the plot of $F_n^{-1}$ is close to that of $F^{-1}$.
+
+The test consists on checking whether the points
+
+$$\tag{4.34}\left(F^{-1}\left(\frac1n\right), F_n^{-1}\left(\frac1n\right)\right), \left(F^{-1}\left(\frac2n\right), F_n^{-1}\left(\frac2n\right)\right), \ldots, \left(F^{-1}\left(\frac{n-1}n\right), F_n^{-1}\left(\frac{n-1}n\right)\right)$$
+
+are aligned along $y = x$. $F_n$ is not technically invertible, but we define
+
+$$\tag{4.35}F_n^{-1}\left(\frac{i}n\right) = X_{(i)}$$
+
+where $X_{(i)}$ are the ordered samples.
 
 ## Addendum A: Frequent distributions
 
