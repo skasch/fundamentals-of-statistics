@@ -1266,3 +1266,150 @@ $$\tag{A.9.3} \ell_d(x_1, \ldots, x_d, \mu, b) = -d\ln2 -d\ln b - \frac1b\sum_{i
 *Maximum Likelihood Estimators*:
 
 $$\hat{\mu} = \Med{1\leq i \leq d}X_i, \hat{b} = \frac{1}d\sum_{i=1}^d|X_i - \hat{\mu}|$$
+
+# Addendum B: Notable relations
+
+## Statistics
+
+### Probability, density and expectation
+
+A probability space is a triplet $(\Omega, \mathcal{F}, P)$ where $\Omega$ is the set of possible outcomes, $\mathcal{F}$ a set of subsets of $\Omega$ such as $(\Omega, \mathcal{F})$ is measurable and $P: \mathcal{F} \rightarrow [0, 1]$ is the probability function such as it is (countably) additive and $P
+(\Omega) = 1$.
+
+A **random variable** $X$ is a function:
+
+$$\tag{B.1.1}X: \Omega \rightarrow E$$
+
+Where $E$ is the value-space of $X$; usually, $E \subseteq \R$. For any $S \subseteq E$, the **probability** of $X \in S$ is given by:
+
+$$\tag{B.1.2}\P[X \in S] = P(\{\omega \in \Omega | X(\omega) \in S\})$$
+
+If $E$ is discrete, we can define the **Probability Mass Function (*PMF*)** $p_X: E \rightarrow [0,1]$ of $X$:
+
+$$\tag{B.1.3}\forall x \in E, p_X(x) = \P[X = x] = P(\{X^{-1}(x)\})$$
+
+If $E \subseteq \R$, we can defin the **Cumulative Density Function (*CDF*)** $F_X: E \rightarrow [0,1]$ of $X$:
+
+$$\tag{B.1.4}\forall x \in E, F_X(x) = \P[X \leq x] = P(X^{-1}((-\infty, x])))$$
+
+And the **Probability Density Function (*PDF*)** $f_X: E \rightarrow [0,+\infty)$ is defined by:
+
+$$\tag{B.1.5}f_X(x) = F_X'(x)$$
+
+Which leads to the following relation:
+
+$$\tag{B.1.6}\int_a^bf_X(x)dx = F_X(b) - F_X(a) = \P[X \leq b] - \P[X \leq a] = \P[x \in [a,b]] = P(X^{-1}([a,b]))$$
+
+The **expectation** of a random variable $X$ is defined as:
+
+$$\tag{B.1.7} \E[X] = \int_\Omega X(\omega)dP(\omega) = \int_0^1xdF_X(x) = \int_Exf_X(x)dx$$
+
+Given a function $g : E \rightarrow F \subseteq \R$ bijective and continuously differentiable, and $Y = g(X)$, then
+
+$$\tag{B.1.8}F_Y(y) = \P[Y \leq y] = \P[g(X) \leq g(x)] = \begin{cases}
+    \P[X \leq x] = F_X(x) & \text{ if }g\text{ is increasing} \\
+    \P[X \geq x] = = 1 - F_X(x) & \text{ if }g\text{ is decreasing}
+\end{cases}$$
+
+Therefore:
+
+$$f_Y(y) = \diff{F_Y}{y}(y) =\begin{cases}
+    \displaystyle \diff{F_X}{y}(y) = \diff{x}{y}(y)\diff{F_X}{x}(x) = (g^{-1})'(y)f_X(x) & \text{ if }g\text{ is increasing} \\
+    \displaystyle \diff{1-F_X}{y}(y) = \diff{x}{y}(y)\diff{1-F_X}{x}(x) = -(g^{-1})'(y)f_X(x) & \text{ if }g\text{ is decreasing}
+\end{cases}$$
+
+Which means:
+
+$$\tag{B.1.9}f_Y(y) = |(g^{-1})'(y)|f_X(x)$$
+
+Combining this result with the change of variable $y = g(x)$ yields the **Law of the Unconscious Statistician**:
+
+$$\tag{B.1.10}\E[g(X)] = \int_0^1ydF_Y(y) = \int_Eg(x)f_X(x)dx$$
+
+**Expectation properties**, given $X, Y$ random variables and $a, b \in \R$:
+
+$$\tag{B.1.11} \begin{cases}
+    X \overset{a.s.}{=} Y \implies \E[X] = \E[Y] \\
+    X \overset{a.s.}{=} c \in E \implies \E[X] = c \\
+    \E[\E[X]] = \E[X] \\
+    \E[aX + bY] = a\E[X] + b\E[Y]
+\end{cases}$$
+
+**Jensen's Inequality**, given a function $\phi$ convex:
+
+$$\tag{B.1.12}\varphi(\E[X]) \leq \E[\varphi(X)]$$
+
+### Variance and Independence
+
+The **variance** of a random variable $X$ is defined by:
+
+$$\tag{B.1.13}\V[X] = \E[(X - \E[X])^2] = \E[X^2 - 2X\E[X] + \E[X]^2] = \E[X^2] - 2\E[X]\E[X] + \E[X]^2 = \E[X^2] - \E[X]^2$$
+
+**Variance properties**, with $X$ a random variable and $a \in \R$:
+
+$$\tag{B.1.14}\begin{cases}
+    \V[X + a] = \V[X]
+    \V[aX] = a^2\V[X]
+
+The **covariance** of two random variables $X$ and $Y$ is defined by:
+
+$$\tag{B.1.15}\Cov(X, Y) = \E[(X - \E[X])(Y - \E[Y])] = \E[XY] - \E[X]\E[Y] = \E[X(Y - \E[Y])] = \E[(X - \E[X])Y]$$
+
+In particular,
+
+$$\tag{B.1.16}\Cov(X, X) = \V[X]$$
+
+**Covariance properties**, with $X, Y, Z$ random variables, and $a, b, c \in \R$:
+
+$$\tag{B.1.17}\begin{cases}
+    \Cov(X, a) = 0 \\
+    \Cov(X, Y) = \Cov(Y, X) \\
+    \Cov(aX + bY, cZ) = ac\Cov(X, Z) + bc\Cov(Y, Z)
+\end{cases}$$
+
+In particular,
+
+$$\tag{B.1.18}\V[X+Y] = \V[X] + \V[Y] + 2\Cov(X, Y)$$
+
+Two random variables $X, Y$ are **independent** ($X \perp \!\!\! \perp Y$) if
+
+$$\tag{B.1.18}X \perp \!\!\! \perp Y \iff F_{X,Y}(x, y) = F_X(x)F_Y(y) \iff f_{X,Y}(x,y) = f_X(x)f_Y(y)$$
+
+Therefore, if $X \perp\!\!\!\perp Y$, then
+
+$$\tag{B.1.19} \E[XY] = \E[X]\E[Y]$$
+
+But **the converse isn't true in general**. It follows that:
+
+$$\tag{B.1.20}\begin{cases}
+    \Cov(X, Y) = 0 \\
+    \V[X+Y] = \V[X] + \V[Y]
+\end{cases}$$
+
+### Tests
+
+The *p-value* is formally defined as:
+
+$$\tag{B.1.21} \pval = \P[\mathcal{D} \geq T_n | T_n]$$
+
+Where $T_n$ is the test statistics and $\mathcal{D}$ is the test distribution ($\Norm(0,1)$ for an asymptotic test).
+
+## Probability
+
+### Conditional Probability
+
+Given two events $A, B \subset \Omega$, the **conditional probabilty** of $A$ knowing $B$ is defined as:
+
+$$\tag{B.2.1}P(A|B) = \frac{P(A \cap B)}{P(B)} \leq 1$$
+
+The **Bayes Formula** gives us an expression of this probability:
+
+$$\tag{B.2.2}P(A|B) = \frac{P(A)P(B|A)}{P(B)}$$
+
+$A$ and $B$ are **independent** if
+
+$$\tag{B.2.3}P(A\cap B) = P(A)P(B)$$
+
+Which leads to:
+
+$$\tag{B.2.4}P(A|B) = P(A), P(B|A) = P(B)$$
