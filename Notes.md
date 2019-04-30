@@ -23,7 +23,7 @@ the course [Fundamentals of Statistics](https://courses.edx.org/courses/course-v
 
 #### Law of Large Numbers, Central Limit Theorem
 
-Let $X_1, \ldots, X_n$ be **independent and identically distributed** (*i.i.d*)
+Let $\Xton$ be **independent and identically distributed** (*i.i.d*)
 **random variables** (*r.v.*). Let $\mu = \E[X]$ the expectation and
 $\sigma^2 = \V[X]$ the variance of these random variables.
 
@@ -40,11 +40,11 @@ almost surely.
 
 **Central Limit Theorem** (*CLT*):
 
-$$\tag{1.2} \sqrt{n}\frac{\bar{X}_n - \mu}{\sigma} \convd \mathcal{N}(0, 1)$$
+$$\tag{1.2} \sqrt{n}\frac{\bar{X}_n - \mu}{\sigma} \convd \Norm(0, 1)$$
 
 Equivalently, we also have:
 
-$$\sqrt{n}(\bar{X}_n - \mu) \convd \mathcal{N}(0, \sigma^2)$$
+$$\sqrt{n}(\bar{X}_n - \mu) \convd \Norm(0, \sigma^2)$$
 
 If $n$ is not large enough to apply the *CLT*, we have *Hoeffding's inequality*.
 If $X \in [a, b]$ almost surely, then
@@ -139,7 +139,7 @@ $$\tag{1.15} f(T_n) \conv{a.s./\P/(d)} f(T)$$
 
 Trinity of statistical inference: *estimation*, *confidence intervals* and *hypothesis testing*.
 
-Given $X_1, \ldots, X_n \iid \P$, the goal is to learn the distribution $\P$.
+Given $\Xton \iid \P$, the goal is to learn the distribution $\P$.
 
 A **statistical model** is defined as:
 
@@ -171,29 +171,29 @@ A **statistic** is any measurable function of the sample.
 
 An **estimator of $\theta$** is any statistic whose expression doesn't depend on $\theta$.
 
-An estimator $\thn$ of $\theta$ is **weakly (resp. strongly) consistent** if:
+An estimator $\ethn$ of $\theta$ is **weakly (resp. strongly) consistent** if:
 
-$$\tag{2.4} \thn \conv{\P\;(resp.\;a.s.)} \theta \quad (\P_\theta)$$
+$$\tag{2.4} \ethn \conv{\P\;(resp.\;a.s.)} \theta \quad (\P_\theta)$$
 
-An estimator $\thn$ of $\theta$ is **asymptotically normal** if:
+An estimator $\ethn$ of $\theta$ is **asymptotically normal** if:
 
-$$\tag{2.5} \sqrt{n}(\thn - \theta) \convd \Norm(0, \sigma^2)$$
+$$\tag{2.5} \sqrt{n}(\ethn - \theta) \convd \Norm(0, \sigma^2)$$
 
-The quantity $\sigma^2$ is called the **asymptotic variance** of $\thn$, noted
+The quantity $\sigma^2$ is called the **asymptotic variance** of $\ethn$, noted
 
-$$\tag{2.6} V(\thn) = \sigma^2$$
+$$\tag{2.6} V(\ethn) = \sigma^2$$
 
-The **bias** of an estimator $\thn$ of $\theta$ is defined as:
+The **bias** of an estimator $\ethn$ of $\theta$ is defined as:
 
-$$\tag{2.7} \Bias(\thn) = \E[\thn] - \theta$$
+$$\tag{2.7} \Bias(\ethn) = \E[\ethn] - \theta$$
 
-If $\Bias(\thn) = 0$, then we say that $\thn$ is **unbiased**.
+If $\Bias(\ethn) = 0$, then we say that $\ethn$ is **unbiased**.
 
-The **quadratic risk** (or **risk**) of an estimator $\thn$ is
+The **quadratic risk** (or **risk**) of an estimator $\ethn$ is
 
-$$\tag{2.8} R(\thn) = \E\left[(\thn - \theta)^2\right] = \V[\thn] + \Bias(\thn)^2$$
+$$\tag{2.8} R(\ethn) = \E\left[(\ethn - \theta)^2\right] = \V[\ethn] + \Bias(\ethn)^2$$
 
-Let $\statmodel$ be a statistical model with $\Theta \subseteq \R$ associated with observations $X_1, \ldots, X_n$, and $\alpha \in (0, 1)$.
+Let $\statmodel$ be a statistical model with $\Theta \subseteq \R$ associated with observations $\Xton$, and $\alpha \in (0, 1)$.
 
 A **confidence interval (*C.I.*) of level $1 - \alpha$** is any random interval $\mathcal{I}$ independent from $\theta$ such as:
 
@@ -203,7 +203,7 @@ A **C.I. of asymptotic level $1 - \alpha$** is any random interval $\mathcal{I}_
 
 $$\tag{2.10} \forall \theta \in \Theta, \limn\P_\theta[\mathcal{I}_n \ni \theta] \geq 1 - \alpha$$
 
-*Example*: $X_1, \ldots, X_n \iid \Ber(p)$. Our estimator is $\est{p} = \bar{X}_n$. From the CLT:
+*Example*: $\Xton \iid \Ber(p)$. Our estimator is $\estn{p} = \bar{X}_n$. From the CLT:
 
 $$\sqrt{n}\frac{\bar{X}_n - p}{\sqrt{p(1-p)}} \convd\Norm(0,1)$$
 
@@ -224,9 +224,9 @@ $$\forall p \in (0, 1), p(1-p) \leq \frac14 \implies \mathcal{I}_{conv} = \bar{X
 
 $$(p - \bar{X}_n)^2 \leq \frac{q^2_{\alpha/2}}{n}p(1-p) \implies \mathcal{I}_{solve} = [p_1, p_2]$$
 
-**Plug-in bounds**; as $\est{p} \convas p$, we can apply Slutsky's theorem:
+**Plug-in bounds**; as $\estn{p} \convas p$, we can apply Slutsky's theorem:
 
-$$\sqrt{n}\frac{\bar{X}_n-p}{\sqrt{\est{p}(1 -\est{p})}} \convd \Norm(0, 1) \implies \mathcal{I}_{plug} = \bar{X}_n + q_{\alpha/2}\left[-\sqrt{\frac{\est{p}(1-\est{p})}{n}}, \sqrt{\frac{\est{p}(1-\est{p})}{n}}\right]$$
+$$\sqrt{n}\frac{\bar{X}_n-p}{\sqrt{\estn{p}(1 -\estn{p})}} \convd \Norm(0, 1) \implies \mathcal{I}_{plug} = \bar{X}_n + q_{\alpha/2}\left[-\sqrt{\frac{\estn{p}(1-\estn{p})}{n}}, \sqrt{\frac{\estn{p}(1-\estn{p})}{n}}\right]$$
 
 All three intervals verify:
 
@@ -248,7 +248,7 @@ $$\tag{2.11}\sqrt{n}(g(X_n) - g(\theta)) \convd \Norm(0, g'(\theta)^2\sigma^2)$$
 
 ### Lecture 6: Introduction to Hypothesis Testing, and Type 1 and Type 2 Errors
 
-Let us consider a sample $X_1, \ldots, X_n$ of i.i.d r.v. and a statistical model $\statmodel$. Let us consider $\Theta_0 \amalg \Theta_1 = \Theta$.
+Let us consider a sample $\Xton$ of i.i.d r.v. and a statistical model $\statmodel$. Let us consider $\Theta_0 \amalg \Theta_1 = \Theta$.
 
 * $H_0: \theta \in \Theta_0$ is called the **null hypothesis**,
 * $H_1: \theta \in \Theta_1$ is called the **alternative hypothesis**.
@@ -259,8 +259,8 @@ $H_0$ and $H_1$ do not play symmetric roles in hypothesis testing: $H_0$ is the 
 
 A **test** is a statistic $\psi : E^n \rightarrow \{0, 1\}$ such as:
 
-* If $\psi(x_1, \ldots, x_n) = 0$ then $H_0$ is not rejected,
-* If $\psi(x_1, \ldots, x_n) = 1$ then $H_0$ is rejected and $H_1$ is accepted.
+* If $\psi(\Xton) = 0$ then $H_0$ is not rejected,
+* If $\psi(\Xton) = 1$ then $H_0$ is rejected and $H_1$ is accepted.
 
 The **rejection region** of a test $\psi$ is:
 
@@ -307,7 +307,7 @@ Example: Let $X_1, …, X_n \iid \mathcal{D}(\mu)$ where $\mu$ and $\sigma^2$ ar
 
 We want to test $H_0: \mu = \mu_0$ against $H_1: \mu \neq \mu_0$ with asymptotic level $\alpha$.
 
-$$\tag{2.18} T_n = \sqrt{n}\frac{\est{\mu} - \mu_0}{\sigma} \convd \Norm(0, 1)$$
+$$\tag{2.18} T_n = \sqrt{n}\frac{\estn{\mu} - \mu_0}{\sigma} \convd \Norm(0, 1)$$
 
 Therefore, if $H_0$ is true, then
 
@@ -331,9 +331,9 @@ The *golden rule*: $H_0$ is rejected by $\psi_\alpha$ at any asymptotic level $\
 
 ### Lecture 8: Distance measures between distributions
 
-Let $\statmodel$ a statistical model, associated with a sample of i.i.d r.v. $X_1, \ldots, X_n$. We assume the model is well specified, i.e. $\exists \tth \in \Theta, X \sim \P_\tth$. $\tth$ is called the **true parameter**.
+Let $\statmodel$ a statistical model, associated with a sample of i.i.d r.v. $\Xton$. We assume the model is well specified, i.e. $\exists \trth \in \Theta, X \sim \P_\trth$. $\trth$ is called the **true parameter**.
 
-We want to find an estimator $\thn$ such that $\P_{\thn}$ is close to $\P_\tth$.
+We want to find an estimator $\ethn$ such that $\P_{\ethn}$ is close to $\P_\trth$.
 
 The **total variation distance** between two probability measures $\P_1$ and $\P_2$ is defined as:
 
@@ -358,7 +358,7 @@ Therefore, $\TV$ is a distance between probability distributions.
 
 Problem 1: $\TV$ cannot compare discrete and continuous distributions, which means we cannot trust it to give a reliable estimation of distance between unrelated distributions.
 
-Problem 2: We cannot build an estimator $\theta \mapsto \widehat{\TV}(\P_\theta, \P_\tth)$ as we do not know $\tth$.
+Problem 2: We cannot build an estimator $\theta \mapsto \widehat{\TV}(\P_\theta, \P_\trth)$ as we do not know $\trth$.
 
 Hence we need another "distance" between distributions. The **Kullback-Leibler (*KL*) divergence** between two probability distributions $\P_1, \P_2$ is defined as:
 
@@ -371,38 +371,38 @@ Proprieties of the $\KL$ divergence:
 * The $\KL$ is **definite**: $\forall \P_1, \P_2, \KL(\P_1, \P_2) = 0 \implies \P_1 = \P_2$
 * In general, $\KL(\P_1, \P_3) \not\leq \KL(\P_1, \P_2) + \KL(\P_2, \P_3)$
 
-$\KL$ is not a distance, it's a divergence. But we still have that $\tth$ is the only minimizer of $\theta \mapsto \KL(\P_\tth, \P_\theta)$.
+$\KL$ is not a distance, it's a divergence. But we still have that $\trth$ is the only minimizer of $\theta \mapsto \KL(\P_\trth, \P_\theta)$.
 
 ### Lecture 9: Maximum Likelihood Estimation
 
-$$\begin{aligned}\KL(\P_\tth, \P_\theta) &= \E_\tth\left[\ln\frac{f_\tth(X)}{f_\theta(X)}\right] \\ &= \E_\tth[\ln f_\tth(X)] - \E_\tth[\ln f_\theta(X)]\end{aligned}$$
+$$\begin{aligned}\KL(\P_\trth, \P_\theta) &= \E_\trth\left[\ln\frac{f_\trth(X)}{f_\theta(X)}\right] \\ &= \E_\trth[\ln f_\trth(X)] - \E_\trth[\ln f_\theta(X)]\end{aligned}$$
 
 Therefore, by the LLN the $\KL$ divergence can be estimated by taking the average of $\ln f_\theta(X_i)$:
 
-$$\widehat{\KL}(\P_\tth, \P_\theta) = \text{constant} - \frac1n\sum_{i=1}^n\ln f_\theta(X_i)$$
+$$\widehat{\KL}(\P_\trth, \P_\theta) = \text{constant} - \frac1n\sum_{i=1}^n\ln f_\theta(X_i)$$
 
 Therefore:
 
 $$\begin{aligned}
-    \argmin{\theta \in \Theta}\widehat{\KL}(\P_\tth, \P_\theta) &= \argmin{\theta \in \Theta} -\frac1n\sum_{i=1}^n\ln f_\theta(X_i) \\
+    \argmin{\theta \in \Theta}\widehat{\KL}(\P_\trth, \P_\theta) &= \argmin{\theta \in \Theta} -\frac1n\sum_{i=1}^n\ln f_\theta(X_i) \\
     &= \argmax{\theta \in \Theta}\ln\prod_{i=1}^nf_\theta(X_i) \\
     &= \argmax{\theta \in \Theta}\prod_{i=1}^nf_\theta(X_i)
 \end{aligned}$$
 
 This is the **maximum likelihood principle**.
 
-Let $\statmodel$ be a statistical model associated with  a sample of i.i.d r.v. $X_1, \ldots, X_n$. The **likelihood** of the model is the function:
+Let $\statmodel$ be a statistical model associated with  a sample of i.i.d r.v. $\Xton$. The **likelihood** of the model is the function:
 
-$$\tag{3.5}\fun{L_n}{E^n \times \Theta}{[0, 1]}{(x_1, \ldots, x_n, \theta)}{\begin{cases}
+$$\tag{3.5}\fun{L_n}{E^n \times \Theta}{[0, 1]}{(\Xton, \theta)}{\begin{cases}
     \displaystyle \prod_{i=1}^np_\theta(x_i) & \text{if }E\text{ is discrete} \\
     \displaystyle \prod_{i=1}^nf_\theta(x_i) & \text{if }E\text{ is continous}
 \end{cases}}$$
 
 The **maximum likelihood estimator** of $\theta$ is defined as:
 
-$$\tag{3.6} \thn^{MLE} = \argmax{\theta \in \Theta} L_n(X_1, \ldots, X_n, \theta)$$
+$$\tag{3.6} \ethn^{MLE} = \argmax{\theta \in \Theta} L_n(\Xton, \theta)$$
 
-In practice, we often use the **log-likelihood** $\ell_n(x_1, \ldots, x_n, \theta) = \ln L_n(x_1, \ldots, x_n, \theta)$.
+In practice, we often use the **log-likelihood** $\ell_n(\Xton, \theta) = \ln L_n(\Xton, \theta)$.
 
 A function twice differentiable $h : \Theta \subseteq \R \rightarrow \R$ is **concave** (resp. **strictly**) if
 
@@ -414,32 +414,32 @@ A con-**v**-ex function is shaped like a **v**.
 
 Let $h: \Theta \subseteq \R^d \rightarrow \R$ be a multivariate function. The **gradient** vector of $h$ is:
 
-$$\tag{3.8} \nabla h(\ttheta) = \begin{pmatrix}\displaystyle \diff{h}{\theta_1}(\ttheta) \\ \displaystyle \vdots \\ \displaystyle \diff{h}{\theta_d}(\ttheta)\end{pmatrix}$$
+$$\tag{3.8} \nabla h(\tth) = \begin{pmatrix}\displaystyle \diff{h}{\theta_1}(\tth) \\ \displaystyle \vdots \\ \displaystyle \diff{h}{\theta_d}(\tth)\end{pmatrix}$$
 
 The **Hessian matrix** of $h$ is:
 
-$$\tag{3.9} \HH h(\ttheta) = \begin{pmatrix}
-    \displaystyle \diffk{h}{\theta_1}{2}(\ttheta) & \cdots & \displaystyle \diffd{h}{\theta_1}{\theta_d}(\ttheta) \\
+$$\tag{3.9} \HH h(\tth) = \begin{pmatrix}
+    \displaystyle \diffk{h}{\theta_1}{2}(\tth) & \cdots & \displaystyle \diffd{h}{\theta_1}{\theta_d}(\tth) \\
     \vdots & \ddots & \vdots \\
-    \displaystyle \diffd{h}{\theta_d}{\theta_1}(\ttheta) & \cdots & \displaystyle \diffk{h}{\theta_d}{2}(\ttheta) \\
+    \displaystyle \diffd{h}{\theta_d}{\theta_1}(\tth) & \cdots & \displaystyle \diffk{h}{\theta_d}{2}(\tth) \\
 \end{pmatrix} \in \R^{d\times d}$$
 
 Therefore, $h$ is **concave** (resp. **strictly**) if
 
-$$\tag{3.10} \forall \xx \in \R^d \setminus \{\zz\}, \ttheta \in \Theta, \xx^T\HH h(\ttheta)\xx \leq 0 \quad\text{(resp. }< 0\text{)}$$
+$$\tag{3.10} \forall \xx \in \R^d \setminus \{\zz\}, \tth \in \Theta, \xx^T\HH h(\tth)\xx \leq 0 \quad\text{(resp. }< 0\text{)}$$
 
 If $h$ is strictly concave and has a maximum, then this maximum is unique and is reached for
 
 $$\tag{3.11} \begin{cases}
     h'(\theta) = 0 & \text{if }\Theta \subseteq \R \\
-    \nabla h(\ttheta) = \zz & \text{if }\Theta \subseteq \R^d
+    \nabla h(\tth) = \zz & \text{if }\Theta \subseteq \R^d
 \end{cases}$$
 
 ### Lecture 10: Consistency of MLE, Covariance Matrices, and Multivariate Statistics
 
 Under mild regularity conditions, we have
 
-$$\tag{3.12} \thn^{MLE} \convp \tth$$
+$$\tag{3.12} \ethn^{MLE} \convp \trth$$
 
 Notably if the model is well specified.
 
@@ -482,51 +482,51 @@ $$\sqrt{n}\SSigma^{-1/2}(\bar{\XX}_n - \mmu) \convd \Norm_d(\zz, I_d)$$
 
 The **Multivariate Delta Method**, let $(\TT_n)_n \in (\R^d)^\N$ be a sequence of random vectors such that
 
-$$\sqrt{n}(\TT_n - \ttheta) \convd \Norm_d(\zz, \SSigma)$$
+$$\sqrt{n}(\TT_n - \tth) \convd \Norm_d(\zz, \SSigma)$$
 
-with $\ttheta \in \R^d, \SSigma \in \R^{d\times d}$. Let $\bm{g}: \R^d \rightarrow \R^k$ be continuously differentiable in $\ttheta$. Then:
+with $\tth \in \R^d, \SSigma \in \R^{d\times d}$. Let $\bm{g}: \R^d \rightarrow \R^k$ be continuously differentiable in $\tth$. Then:
 
-$$\tag{3.19} \sqrt{n}(\bm{g}(\TT_n) - \bm{g}(\ttheta)) \convd \Norm_k(\zz, \nabla \bm{g}(\ttheta)^T\SSigma\nabla \bm{g}(\ttheta))$$
+$$\tag{3.19} \sqrt{n}(\bm{g}(\TT_n) - \bm{g}(\tth)) \convd \Norm_k(\zz, \nabla \bm{g}(\tth)^T\SSigma\nabla \bm{g}(\tth))$$
 
 where
 
-$$\nabla \bm{g}(\ttheta) = \left(\diff{g_j}{\theta_i}\right)_{i, j} = \left(\nabla g_1(\ttheta), \cdots,\nabla g_k(\ttheta)\right)$$
+$$\nabla \bm{g}(\tth) = \left(\diff{g_j}{\theta_i}\right)_{i, j} = \left(\nabla g_1(\tth), \cdots,\nabla g_k(\tth)\right)$$
 
 ### Lecture 11: Fisher Information, Asymptotic Normality of MLE; Methods of Moments
 
 Let $\statmodel$ be a statistical model with $\Theta \subseteq \R^d$, and $\XX$ an associated random variable. With
 
-$$\ell(\ttheta) = \ln L_1(\XX, \ttheta)$$
+$$\ell(\tth) = \ln L_1(\XX, \tth)$$
 
 The **Fisher Information** of the model is defined as:
 
-$$\tag{3.20} I : \ttheta \mapsto \E[\nabla\ell(\ttheta)\nabla\ell(\ttheta)^T] - \E[\nabla\ell(\ttheta)]\E[\nabla\ell(\ttheta)]^T$$
+$$\tag{3.20} I : \tth \mapsto \E[\nabla\ell(\tth)\nabla\ell(\tth)^T] - \E[\nabla\ell(\tth)]\E[\nabla\ell(\tth)]^T$$
 
 Under some regularity conditions, we have that:
 
-$$\tag{3.21} I(\ttheta) = - \E[\HH\ell(\ttheta)]$$\
+$$\tag{3.21} I(\tth) = - \E[\HH\ell(\tth)]$$\
 
 If $\Theta \subseteq \R$, we have:
 
 $$\tag{3.22} I(\theta) = \V[\ell'(\theta)] = -\E[\ell''(\theta)]$$
 
-**Asymptotic normality of the MLE**. Let $\ttth \in \Theta$ be the true parameter. If we have the following:
+**Asymptotic normality of the MLE**. Let $\trtth \in \Theta$ be the true parameter. If we have the following:
 
-* $\ttth$ is identifiable,
-* $\forall \ttheta \in \Theta$, the support of $\P_\theta$ does not depend on $\theta$,
-* $\ttth$ is not on the boundary of $\Theta$,
-* $I(\ttheta)$ is invertible in a neighborhood of $\ttth$,
+* $\trtth$ is identifiable,
+* $\forall \tth \in \Theta$, the support of $\P_\theta$ does not depend on $\theta$,
+* $\trtth$ is not on the boundary of $\Theta$,
+* $I(\tth)$ is invertible in a neighborhood of $\trtth$,
 * A few more technical conditions,
 
-then $\tthn^{MLE}$ satisfies:
+then $\etthn^{MLE}$ satisfies:
 
-$$\tag{3.23} \tthn^{MLE} \convp \ttth \quad [\P_{\ttth}]$$
+$$\tag{3.23} \etthn^{MLE} \convp \trtth \quad [\P_{\trtth}]$$
 
-$$\tag{3.24} \sqrt{n}(\tthn^{MLE} - \ttth) \convd \Norm_d(0, I(\ttth)^{-1}) \quad [\P_{\ttth}]$$
+$$\tag{3.24} \sqrt{n}(\etthn^{MLE} - \trtth) \convd \Norm_d(0, I(\trtth)^{-1}) \quad [\P_{\trtth}]$$
 
 Let $\XX_1, …, \XX_n$ be an i.i.d sample associated with a statistical model $\statmodel$, with $E \subseteq \R$ and $\Theta \subseteq \R^d$. The **population moments** are:
 
-$$\tag{3.25} \forall 1 \leq k \leq d, m_k(\ttheta) = \E_\ttheta[X^k]$$
+$$\tag{3.25} \forall 1 \leq k \leq d, m_k(\tth) = \E_\tth[X^k]$$
 
 And the **empirical moments are**:
 
@@ -534,35 +534,35 @@ $$\tag{3.26} \forall 1 \leq k \leq d, \hat{m}_k = \overline{X^k_n} = \frac1n\sum
 
 From the LLN, we have
 
-$$\tag{3.27} (\hat{m}_1, \ldots, \hat{m}_d) \conv{\P / a.s.} (m_1(\ttheta), \ldots, m_d(\ttheta))$$
+$$\tag{3.27} (\hat{m}_1, \ldots, \hat{m}_d) \conv{\P / a.s.} (m_1(\tth), \ldots, m_d(\tth))$$
 
 Let
 
-$$\fun{M}{\Theta}{\R^d}{\ttheta}{M(\ttheta) = (m_1(\ttheta), \ldots, n_d(\ttheta))}$$
+$$\fun{M}{\Theta}{\R^d}{\tth}{M(\tth) = (m_1(\tth), \ldots, n_d(\tth))}$$
 
-Then if $M$ is injective, $\ttheta = M^{-1}(m_1(\ttheta), \ldots, m_d(\ttheta))$
+Then if $M$ is injective, $\tth = M^{-1}(m_1(\tth), \ldots, m_d(\tth))$
 
-The **moment estimator of $\ttheta$**, if it exists, is defined as
+The **moment estimator of $\tth$**, if it exists, is defined as
 
-$$\tag{3.28} \tthn^{MM} = M^{-1}(\hat m_1, \ldots, \hat m_d)$$
+$$\tag{3.28} \etthn^{MM} = M^{-1}(\hat m_1, \ldots, \hat m_d)$$
 
-Let $\hat M = (\hat m_1, \ldots, \hat m_d)$. Let $\SSigma(\ttheta)  = \CCov_\ttheta(X, X^2, \ldots, X^d)$. Let us assume $M^{-1}$ is continuously differentiable at $M(\ttheta)$.
+Let $\hat M = (\hat m_1, \ldots, \hat m_d)$. Let $\SSigma(\tth)  = \CCov_\tth(X, X^2, \ldots, X^d)$. Let us assume $M^{-1}$ is continuously differentiable at $M(\tth)$.
 
-We can **generalize** the method of moments to any set of functions $g_1, \ldots, g_d : R \rightarrow \R$ well chosen, by defining $m_k(\ttheta) = \E_\ttheta[g_k(X)]$ and $\SSigma(\ttheta) = \CCov_\ttheta(g_1(X), \ldots, g_k(X))$.
+We can **generalize** the method of moments to any set of functions $g_1, \ldots, g_d : R \rightarrow \R$ well chosen, by defining $m_k(\tth) = \E_\tth[g_k(X)]$ and $\SSigma(\tth) = \CCov_\tth(g_1(X), \ldots, g_k(X))$.
 
 The **generalized method of moments** yields, by applying the CLT and the Delta method:
 
-$$\tag{3.29} \sqrt{n}(\tthn^{MM} - \theta) \convd\Norm_d(\zz, \Gamma(\ttheta))$$
+$$\tag{3.29} \sqrt{n}(\etthn^{MM} - \theta) \convd\Norm_d(\zz, \Gamma(\tth))$$
 
 where
 
-$$\Gamma(\ttheta) = \left[\nabla M^{-1}(M(\ttheta))\right]^T\SSigma(\ttheta)\left[\nabla M^{-1}(M(\ttheta))\right]$$
+$$\Gamma(\tth) = \left[\nabla M^{-1}(M(\tth))\right]^T\SSigma(\tth)\left[\nabla M^{-1}(M(\tth))\right]$$
 
 The $MLE$ is more accurate than the $MM$, the $MLE$ still gives good results if the model is mis-specified, however the $MM$ is easier to compute and the $MLE$ can be intractable sometimes.
 
 ### Lecture 12: M-Estimation
 
-Let $X_1, \ldots, X_n \iid \P$ on a sample space $E \subseteq \R^d$.
+Let $\Xton \iid \P$ on a sample space $E \subseteq \R^d$.
 
 The goal is to estimate some parameter $\true\mmu$ associated with $\P$. We find a function $\rho : E \times \mathcal{M} \rightarrow \R$, where $\mathcal{M}$ is the parameter set for $\true\mmu$, such that:
 
@@ -586,9 +586,9 @@ $$\fun{C_\alpha}{\R}{\R}{x}{\begin{cases}
 
 If $\statmodel$ is a statistical model associated with the data, $\mathcal{M} = \Theta$, and $\rho = -\ell_1$ the negative log-likelihood, then
 
-$$\tag{3.31}\true\mmu = \ttth$$
+$$\tag{3.31}\true\mmu = \trtth$$
 
-where $\P = \P_\ttth$. As such, the $MLE$ estimator is an M-estimator.
+where $\P = \P_\trtth$. As such, the $MLE$ estimator is an M-estimator.
 
 Let
 
@@ -602,7 +602,7 @@ Let
 
 $$K(\mmu) = \CCov\left[\nabla_\mmu\rho(X, \mmu)\right]$$
 
-In the case of the log-likelihood, we have $J(\ttheta) = K(\ttheta) = I(\ttheta)$.
+In the case of the log-likelihood, we have $J(\tth) = K(\tth) = I(\tth)$.
 
 Let $\true\mmu \in \mathcal{M}$ be the true parameter. If we have:
 
@@ -610,383 +610,303 @@ Let $\true\mmu \in \mathcal{M}$ be the true parameter. If we have:
 * $J(\mmu)$ is invertible for all $\mmu \in \mathcal{M}$,
 * A few more technical conditions,
 
-then $\est{\mmu}$ satisfies:
+then $\estn{\mmu}$ satisfies:
 
-$$\tag{3.32} \est{\mmu} \convp \true\mmu$$
+$$\tag{3.32} \estn{\mmu} \convp \true\mmu$$
 
-$$\tag{3.33} \sqrt{n}(\est{\mmu} - \true\mmu) \convd \Norm_d(\zz, J^{-1}(\true\mmu)^TK(\true\mmu)J^{-1}(\true\mmu))$$
+$$\tag{3.33} \sqrt{n}(\estn{\mmu} - \true\mmu) \convd \Norm_d(\zz, J^{-1}(\true\mmu)^TK(\true\mmu)J^{-1}(\true\mmu))$$
 
 ## Unit 4: Hypothesis testing
 
 ### Lecture 13: Chi Squared Distribution, T-Test
 
-Our previous tests were based on the CLT and Slutsky.
+The **chi-squared ($\chi^2$) distribution**: let $d \in \N^*$. the $\chi^2_d$ distribution with *$d$ degrees of freedom* is the law of the random variable
 
-* What if Slutsky does not apply?
-* Can we use asymptotic normality of the MLE?
-* How about tests with multivariate parameters (e.g. $\theta_1 = \theta_2$)?
-* Can we more general tests, such as "is my distribution Gaussian"?
-
-Example: Pharmaceutical company wants to test if a new drug is efficient. They administer a drug to a group of patients (test group) and a placebo to another (control group). We want to test if the drugs lowers LDL (bad cholersterol) among patients with a high level of LDL.
-
-* Let $\Delta_d > 0$ denote the expected decrease of LDL level for a patient in the test group.
-* Let $\Delta_c \geq 0$ denote the expected decrease of LDL level for a patient in the control group.
-* We want to know if $\Delta_d > \Delta_c$; we observe:
-  * $X_1, \ldots, X_n \iid \Norm(\Delta_d, \sigma_d^2)$ from the test group,
-  * $Y_1, \ldots, Y_m \iid \Norm(\Delta_c, \sigma_c^2)$ from the control group.
-
-Our hypothesis testing is:
-
-$$H_0: \Delta_c \leq \Delta_d, H_1: \Delta_d > \Delta_c$$
-
-As the data is Gaussian,
-
-$$\bar{X}_n \sim \Norm\left(\Delta_d, \frac{\sigma_d^2}n\right), \bar{Y}_m \sim \Norm\left(\Delta_c, \frac{\sigma_c^2}m\right)$$
-
-Therefore,
-
-$$\frac{\bar{X}_n - \bar{Y}_m - (\Delta_d - \Delta_c)}{\sqrt{\sigma_d^2/n + \sigma_c^2/m}} \sim \Norm(0, 1)$$
-
-Using Slutsky,
-
-$$\frac{\bar{X}_n - \bar{Y}_m - (\Delta_d - \Delta_c)}{\sqrt{\hat{\sigma}_d^2/n + \hat{\sigma}_c^2/m}} \sim \Norm(0, 1)$$
-
-Where
-
-$$\hat{\sigma}^2_d = \frac1{n-1}\sum_{i=1}^n(X_i-\bar{X}_n)^2, \hat{\sigma}^2_c = \frac1{m-1}\sum_{i=1}^m(Y_i-\bar{Y}_m)^2$$
-
-Therefore, the test with asymptotic level $\alpha$ is given by:
-
-$$R_\psi = \left\{\frac{\bar{X}_n - \bar{Y}_m}{\sqrt{\hat{\sigma}^2_d/n + \hat{\sigma}^2_c/m}} > q_\alpha\right\}$$
-
-If $n, m$ are small, we cannot realistically apply Slutsky.
-
-Let $d \in \N$.
-
-**The $\chi^2$ distribution** with $d$ degrees of freedom is the law of the random variable
-
-$$\tag{4.1}Z_1^2 + Z_2^2 + \ldots + Z_d^2$$
+$$\tag{4.1} Z_1^2 + \ldots + Z_d^2 \sim \chi^2_d$$
 
 where $Z_1, \ldots, Z_d \iid \Norm(0, 1)$.
 
-If $Z \sim \Norm_d(0, I_d)$, then $\|Z\|^2_n \sim \chi^2_d$.
+* If $Z \sim \Norm_d(0, I_d)$, then $\|Z\|_2^2 \sim \chi^2_d$.
+* $\chi^2_2 = \Exp(1/2)$.
 
-$\chi^2_2 = \mathcal{Exp}(1/2)$.
+*Proprieties*: let $V \sim \chi^2_d$.
 
-If $V \sim \chi^2_k$, then:
+$$\tag{4.2} \E[V] = d, \quad \V[V] = 2d$$
 
-* $\E[V] = \E[Z_1^2] + \ldots + \E[Z_d^2] = d$
-* $\V[V] = \V[Z_1^2] + \ldots + \E[Z_d^2] = 2d$
+**Cochran's Theorem**: let $\Xton \iid \Norm(\mu, \sigma^2)$. Let
 
-**Cochran's Theorem**: for $X_1, \ldots, X_n \iid \Norm(\mu, \sigma^2)$, if $S_n$ is the sample variance defined as
+$$S_n = \frac1n \sum_{i=1}^n(X_i - \bar{X}_n)^2 = \frac1n \sum_{i=1}^nX_i^2 - \bar{X}_n^2$$
 
-$$\tag{4.2}S_n = \frac1n\sum_{i=1}^n(X_i - \bar{X}_n)^2 = \frac1n\sum_{i=1}^nX_i^2 - \bar{X}_n^2$$
+Be the sample variance. Then:
 
-then:
+$$\tag{4.3}\forall n \in \N, \bar{X}_n \indep S_n \quad \text{and} \quad \frac{nS_n}{\sigma^2} \sim \chi^2_{n-1}$$
 
-$$\tag{4.3} \bar{X}_n \perp\!\!\!\perp S_n$$
+We often prefer the unbiased sample variance:
 
-$$\tag{4.4} \frac{nS_n}{\sigma^2} \sim \chi^2_{n-1}$$
+$$\tilde{S}_n = \frac1{n-1}\sum_{i=1}^n(X_i - \bar{X}_n)^2 = \frac{n}{n-1}S_n$$
 
-We often prefer the unbiased estimator of $\sigma^2$:
+Which verifies $\E[\tilde{S}_n] = \sigma^2$. In this case, we have instead $\frac{(n-1)\tilde{S}_n}{\sigma^2} \sim \chi^2_{n-1}$.
 
-$$\tag{4.5} \tilde{S}_n = \frac1{n-1}\sum_{i=1}^n(X_i - \bar{X}_n)^2 = \frac{n}{n-1}S_n$$
+**Student's T Distribution**: let $d \in \N^*$. The Student's T Distribution $t_d$ with $d$ degrees of freedom is the law of the random variable
 
-Which satisfies:
+$$\tag{4.4} \frac{Z}{\displaystyle \sqrt{\frac{V}d}} \sim t_d$$
 
-$$\E[\tilde{S}_n] = \frac{n}{n-1}\E\left[\frac{\sigma^2}n\chi^2_{n-1}\right] = \frac{n}{n-1}\sigma^2\fra{n-1}n = \sigma^2$$
+where $Z \sim \Norm(0, 1), V \sim \chi^2_d$ and $Z \indep V$.
 
-Let $d \in \N$.
+**Student's T test (one sample, two-sided)**: let $\Xton \iid \Norm(\mu, \sigma^2)$. We want to test $H_0: \mu = \mu_0 = 0$ against $H_1: \mu \neq 0$. We define the test statistic as:
 
-**The Student's T distribution $t_d$** with $d$ degrees of freedom is the law of the random variable
+$$\tag{4.5}T_n = \frac{\bar{X}_n}{\displaystyle \sqrt{\frac{\tilde{S}_n}n}}
+= \frac{\displaystyle \sqrt{n}\frac{\bar{X}_n - \mu_0}{\sigma}}{\displaystyle \sqrt{\frac{\tilde{S}_n}{\sigma^2}}}$$
 
-$$\tag{4.6}\frac{Z}{\sqrt{V/d}}$$
+Since $\sqrt{n}\frac{\bar{X}_n - \mu_0}{\sigma} \sim \Norm(0, 1)$ under $H_0$ and $\frac{\tilde{S}_n}{\sigma^2} \sim \frac1{n-1}\chi^2_{n-1}$ are independent by Cochran's Theorem,
 
-where $Z \sim \Norm(0, 1), V \sim \chi_d^2$, and $Z \perp\!\!\!\perp V$.
+$$T_n \sim t_{n-1}$$
 
-**Student's T test (one sample, two-sided)**: let $X_1, \ldots, X_n \iid \Norm(\mu, \sigma^2)$, where $\mu, \sigma^2$ are unknown. We want to test:
+The *non-asymptotic* Student's test is therefore written, at level $\alpha$:
 
-$$H_0: \mu = 0, H_1: \mu \neq 0$$
+$$\psi_\alpha = \one\{|T_n| > q_{\alpha/2}(t_{n-1})\}$$
 
-The test statistic is given by:
+**Student's T test (one sample, one-sided)**: if instead we have $H_0: \mu = \mu_0 = 0$ and $H_1: \mu > 0$, the test is written, at level $\alpha$:
 
-$$T_n =\frac{\bar{X}_n}{\sqrt{\bar{S}_n / n}} =  \frac{\displaystyle \sqrt{n}\frac{\bar{X}_n - \overbrace{\mu}^{0}}{\sigma}}{\sqrt{\tilde{S}_n/\sigma^2}}$$
+$$\psi_\alpha = \one\{T_n > q_\alpha(t_{n-1})\}$$
 
-Since $\sqrt{n}\bar{X}_n/\sigma \sim \Norm(0, 1)$ and $\tilde{S}_n/\sigma^2 \sim \frac1{n-1}\chi^2_{n-1}$ are independent by Cochan's theorem, we have:
+**Student's T test (two samples, two-sided)**: let $\Xton \iid \Norm(\mu_X, \sigma^2_X)$ and $Y_1, \ldots, Y_m \iid \Norm(\mu_Y, \sigma^2_Y)$. We want to test $H_0: \mu_X = \mu_Y$ against $H_1: \mu_X \neq \mu_Y$. The test statistic is written:
 
-$$\tag{4.7}T_n \sim t_{n-1}$$
+$$\tag{4.6} T_{n, m} = \frac{\bar{X}_n - \bar{Y}_m}{\displaystyle \sqrt{\frac{\est{\sigma^2}_X}n + \frac{\est{\sigma^2}_Y}m}} \sim$$
 
-The Student's test with level $\alpha \in (0, 1)$ is given by:
+**Welch-Satterthwaite formula**: $T_{n, m} \sim t_N$ with
 
-$$\tag{4.8}\psi_\alpha = \one\{|T_n| > q_{\alpha/2}\}$$
+$$\tag{4.7} N = \frac{\displaystyle \left(\frac{\est{\sigma^2}_X}n + \frac{\est{\sigma^2}_Y}m\right)^2}{\displaystyle \frac{\est{\sigma^2}^2_X}{n^2(n-1)} + \frac{\est{\sigma^2}^2_Y}{m^2(m-1)}} \geq \min(n, m)$$
 
-where $q_{\alpha/2}$ is the $(1 - \alpha/2)$-quantile of $t_{n-1}$.
+$N$ should always be rounded down.
 
-**Student's T test (one sample, one-sided)**: we want to test:
+**Pros and cons of the T test**:
 
-$$H_0: \mu \leq \mu_0, H_1: \mu > \mu_0$$
+* Non-asymptotic and can be run on small samples, and can also be seemlessly applied for large samples.
+* The samples must be Gaussian.
 
-The test statistic is
+### Lecture 14: Wald's Test, Likelihood Ratio Test, and Implicit Hypothesis Testing
 
-$$T_n = \frac{\bar{X}_n - \mu_0}{\sqrt{\tilde{S}_n}} \sim t_{n-1}$$
+**Wald's Test**: let $\Xton$ i.i.d samples with a statistical model $\statmodel$, with $\Theta \subseteq \R^d, d \geq 1$. Let $\trtth$ be the true parameter and $\tth_0 \in \Theta$. We want to test $H_0: \trtth = \tth_0$ against $H_1: \trtth \neq \tth_0$. Let $\etthn^{MLE}$ be the maximum likelihood estimator, assuming the conditions are satisfied. Under $H_0$, using Slutsky:
 
-The Student's test with level $\alpha \in (0, 1)$ is given by:
+$$\left.\begin{array}{r} \sqrt{n}I(\tth_0)^{1/2} \\ \sqrt{n}I(\trtth)^{1/2} \\ \sqrt{n}I(\etthn^{MLE})^{1/2}\end{array}\right\}\left(\etthn^{MLE} - \tth_0\right) \convd \Norm_d(0, I_d)$$
 
-$$\tag{4.9}\psi_\alpha = \one\{T_n > q_\alpha\}$$
+Hence, by taking the 2-norm, we have the *Wald's test statistic*:
 
-where $q_\alpha$ is the $(1-\alpha)$-quantile of $t_{n-1}$.
+$$\tag{4.8}T_n = n\left(\etthn^{MLE} - \tth_0\right)^TI\left(\etthn^{MLE}\right)\left(\etthn^{MLE} - \tth_0\right) \convd \chi^2_d$$
 
-**Two samples Student's T test**. We want to know the distribution of:
+The corresponding test with level $\alpha$ is:
 
-$$
-**The Welch-Satterthwaite formula**. We have approximately:
-$$
+$$\psi_\alpha = \one\{T_n > q_\alpha(\chi^2_d)\}$$
 
-where
+Wald's test is also valid for a one-sided test, *but is less powerful*.
 
-$$N = \frac{\displaystyle\left(\frac{\hat{\sigma}^2_d}{n} + \frac{\hat{\sigma}^2_d}{m}\right)^2}{\displaystyle \frac{\hat{\sigma}^4_d}{n^2(n-1)} + \frac{\hat{\sigma}^4_c}{m^2(m-1)}} \geq \min(n, m)$$
+**Likelihood ratio test**: let $r \in \lb 0, d \rb$. Let $\tth_0 = (\theta^0_{r+1}, \ldots, \theta^0_d)^T \in \R^{d-r}$. Let us suppose the null hypothesis is given by:
 
-The Student's T test can be used for any size of samples, even for very small samples; however, it relies on the assumption that the sample is Gaussian.
+$$H_0: (\theta_{r+1}, \ldots, \theta_d)^T = \tth_{r+1\ldots d} = \tth_0$$
 
-### Lecture 14: ????
+Let $\etthn^{MLE}$ be the maximum likelihood estimator, and
 
-Let us consider an i.i.d sample $X_1, \ldots, X_n$ with statistical model $\statmodel$, where $\Theta \subseteq \R^d, d \geq 1$. Let $\ttheta_0 \in \Theta$ fixed and given, and let $\ttth$ be the true parameter. Let us consider the hypotheses:
+$$\tag{4.9}\etthn^c = \argmax{\theta \in \Theta_0}\ell_n(\theta)$$
 
-$$H_0: \ttth = \ttheta_0, H_1: \ttth \neq \ttheta_0$$
+be the constrained maximum likelihood estimator under the null hypothesis. The *likelihood ratio test statistic*:
 
-Let $\thn^{MLE}$ be the MLE, with some technical conditions satisfied. If $H_0$, then:
+$$\tag{4.10}T_n = 2\left(\ell_n(\etthn^{MLE}) - \ell_n(\etthn^c)\right)$$
 
-$$\left.\begin{array}{r} \sqrt{n}I(\ttheta_0)^{1/2} \\ \sqrt{n}I(\ttth)^{1/2} \\ \sqrt{n}I(\tthn^{MLE})^{1/2} \end{array}\right\} \times (\tthn^{\MLE} - \ttheta_0) \convd \Norm_d(\zz, I_d)$$
+**Wilk's Theorem**: under $H_0$, if the MLE conditions are satisfied:
 
-Hence,
+$$\tag{4.11}T_n \convd \chi^2_{d-r}$$
 
-$$\tag{4.10}T_n = n(\tthn^{MLE} - \ttheta_0)^TI(\tthn^{MLE})(\tthn^{MLE} - \ttheta_0) \convd \chi^2_d$$
+The corresponding test with level $\alpha$ is:
 
-**The Wald's test** with asymptotic level $\alpha \in (0, 1)$ is given by:
+$$\psi_\alpha = \one\{T_n > q_\alpha(\chi^2_{d-r})\}$$
 
-$$\tag{4.11}\psi_\alpha = \one\{T_n > q_\alpha\}$$
+**Implicit testing**: let $g: \R^d \rightarrow \R^k$ continuously differentiable, $k \leq d$. We want to test $H_0: g(\theta) = 0$ against $H_1: g(\theta) \neq 0$. By applying the Delta Method:
 
-where $q_\alpha$ is the $(1-\alpha)$-quantile of $\chi_d^2$.
+$$\sqrt{n}\left(g(\etthn) - g(\tth)\right) \convd \Norm_k(\zz_k, \underbrace{\nabla g(\tth)^T\SSigma(\tth)\nabla g(\tth)}_{\Gamma(\tth)})$$
 
-Wald's test is also valid if $H_1$ has the form $\theta > \theta_0$, $\theta < \theta0$ or $\theta = \theta_1$ but is less powerful in that case.
+If $\nabla g(\tth)$ has rank $k$ and $\Gamma(\tth)$ is invertible and continuous, we can apply the Wald's Test method:
 
-Let $X_1, \ldots, X_n$ be an i.i.d sample for the statistical model $\statmodel$, where $\Theta \subseteq \R^d, d \geq 1$. Suppose:
+$$\tag{4.12}T_n = ng(\etthn)^T\Gamma^{-1}(\etthn)g(\etthn) \convd \chi^2_k$$
 
-$$H_0: (\theta_{r+1}, \ldots, \theta_d) = (\theta^{(0)}_{r+1}, \ldots, \theta^{(0)}_{d})$$
+The corresponding test with level $\alpha$ is:
 
-for some fixed $\ttheta^{(0)} \in \R^{d-r}$. Let
+$$\psi_\alpha = \one\{T_n > q_\alpha(\chi^2_k)\}$$
 
-$$\tthn = \argmax{\ttheta \in \Theta}\ell_n(\ttheta)$$
+### Lecture 15: Goodness of Fit Test for Discrete Distributions
 
-and
+**Categorical distribution**: let $E = \{a_1, \ldots, a_k\}$ be a finite space and $(\P_\pp)_{\pp \in \Delta_K}$ be the family of all distributions over $E$:
 
-$$\tag{4.12}\tthn^c = \argmax{\ttheta \in \Theta_0}\ell_n(\ttheta)$$
+$$\tag{4.13}\Delta_K = \left\{\pp \in (0, 1)^K, \sum_{i=1}^Kp_i = 1\right\}$$
 
-the constrained MLE extimator, where $\Theta_0 = \{\ttheta \in \Theta, \ttheta_{r+1\ldots d} = \ttheta^{(0)}\}$.
+The distribution of $X \sim \P_\pp$ is defined by
 
-**The likelihood ratio test** is given by the test statistic:
+$$\tag{4.14}\forall i \in \lb 1, K \rb, \P_\pp(X = a_i) = p_i$$
 
-$$\tag{4.13} T_n = 2(\ell_n(\tthn) - \ell_n(\tthn^c))$$
+**Goodness of fit test**: let us consider $\pp, \pp^0 \in \Delta_K$, and $\Xton \iid \P_\pp$. We want to test $H_0: \pp = \pp^0$ against $H_1: \pp \neq \pp^0$.
 
-**Wilks' Theorem**: let us assume $H_0$, and some MLE technical conditions. Then:
+For example, we can test against the uniform distribution $\pp^0 = (1/K, \ldots, 1/K)^T$.
 
-$$\tag{4.14}T_n \convd \chi^2_{d-r}$$
+We cannot apply Wald's test directly because of the constraint $\sum_ip_i = 1$. Under this constraint, the MLE is:
 
-The likelihood ratio test with asymptotic level $\alpha \in (0, 1)$ is given by:
+$$\tag{4.15}\forall j \in \lb 1, K \rb, \hat{p}_j = \frac{N_j}{n}$$
 
-$$\tag{4.15}\psi_\alpha = \one\{T_n > q_\alpha\}$$
-
-where $q_\alpha$ is the $(1-\alpha)$-quantile of $\chi^2_{d-r}$.
-
-**Implicit hypotheses**: let $X_1, \ldots, X_n \iid \P$, and let $\ttheta \in \R^d$ be a parameter associated with $\P$. Let $g: \R^d \rightarrow \R^k$ be continuously differentiable, with $k \leq d$. Let us consider:
-
-$$H_0: g(\ttheta) = \zz, H_1: g(\ttheta) \neq \zz$$
-
-Let us assume we have an asymptotical norma estimator $\tthn$:
-
-$$\sqrt{n}(\tthn - \ttheta) \convd \Norm_d(0, \SSigma(\ttheta))$$
-
-Using the delta method,
-
-$$\sqrt{n}(g(\tthn) - g(\ttheta)) \convd \Norm_k(\zz, \Gamma(\ttheta))$$
-
-where $\Gamma(\ttheta) = \Nabla g(\ttheta)^T\SSigma(\ttheta)\Nabla g(\ttheta) \in \R^{k\times k}$. If $\SSigma(\ttheta)$ is invertible and $\Nabla g(\ttheta)$ has rank $k$, then $\Gamma(\ttheta)$ is invertible and
-
-$$\tag{4.16}\sqrt{n}\Gamma(\ttheta)^{-1/2}(g(\tthn) - g(\ttheta)) \convd \Norm_k(\zz, I_k)$$
-
-Then, by applying the Slutsky theorem, if $\Gamma(\ttheta)$ is continuous, then
-
-$$\sqrt{n}\Gamma(\tthn)^{-1/2}(g(\tthn) - g(\ttheta)) \convd \Norm_k(\zz, I_k)$$
-
-Hence, if $H_0$ is true, then:
-
-$$\tag{4.17}T_n = ng(\tthn)^T\Gamma(\tthn)^{-1}g(\tthn) \convd \chi^2_k$$
-
-The test with asymptotic level $\alpha \in (0, 1)$ is therefore given by:
-
-$$\tag{4.18} \psi_\alpha = \one\{T_n > q_\alpha\}$$
-
-where $q_\alpha$ is the $(1-\alpha)$-quantile of $\chi^2_k$.
-
-### Lecture 15: ????
-
-Let $X$ be a r.v. Given i.i.d copies of $X$, we want to answer the following type of questions:
-
-* Does $X$ have a normal distribution?
-* Does $X$ have a uniform distribution?
-* Does $X$ have *this* PMF?
-
-This class of questions is called **goodness of fit (GoF)** tests: we want to know if the hypothesized distribution is a good fit for the data.
-
-let $E = \{a_1, \ldots, a_K\}$ be a finite space, and $(\P_\pp)_{\pp \in \Delta_K}$ the family of all probability distributions on $E$, where:
-
-$$\Delta_K = \left\{\pp \in (0, 1)^K, \sum_{i=1}^Kp_i = 1\right\}$$
-
-For $\pp \in \Delta_K$ and $X \sim \P_\pp$,
-
-$$\forall 1 \leq i \leq K, \P_\pp[X = a_i] = p_i$$
-
-Let $X_1, \ldots, X_n \iid \P_\pp$ for some unknown $\pp \in \Delta_k$, and let $\pp^0 \in \Delta_k$ be fixed. We want to test:
-
-$$H_0: \pp = \pp^0, H_1: \pp \neq \pp^0$$
-
-Le likelihood of the multinomial model is given by:
-
-$$\tag{4.19}L_n(x_1, \ldots, x_n, \pp) = \prod_{i=1}^Kp_i^{N_i}$$
-
-where $N_i = |\{X_j = a_i, 1 \leq j \leq n\}|$. Let $\est{\pp}$ be the MLE:
-
-$$(\est{\pp})_i = \frac{N_j}{n}$$
-
-However, $\est{\pp}$ maximizes $\ell_n$ **under the constraint** $\sum_i p_i = 1$.
-
-If $H_0$ is true, then $\sqrt{n}(\est{\pp} - \pp^0)$ is asymptotically normal, and the following holds:
-
-$$\sqrt{n}I(\pp^0)^{1/2}(\est{\pp} - \pp^0) \convd \Norm_{K-1}(0, I_{K-1})$$
+where $N_j = |\{X_i = a_j, i \in \lb 1, n \rb\}|$ is the number of occurences of the $j$-th element in the data.
 
 **Theorem**: under $H_0$,
 
-$$\tag{4.20}T_n = n\sum_{i=1}^K\frac{((\est{\pp})_i - \pp^0_i)^2}{\pp^0_i} \convd \chi^2_{K-1}$$
+$$\tag{4.16}T_n = n\sum_{j=1}^K\frac{(\hat{p}_j - p^0_j)^2}{p^0_j} \convd \chi^2_{K-1}$$
 
-The $\chi^2$ test with asymptotic level $\alpha$ is given by:
+The associated test therefore is:
 
-$$\tag{4.21}\psi_\alpha = \one\{T_n > q_\alpha\}$$
+$$\psi_\alpha = \one\{T_n > q_\alpha(\chi^2_{K-1})\}$$
 
-where $q_\alpha$ is the $(1-\alpha)$-quantile of $\chi^2_{K-1}$. The asymptotic p-value is given by:
+If, instead of testing against a single parameter $\pp^0$, we want to test against a family of distributions, i.e. if we have the following problem:
 
-$$\tag{4.22} \P[Z > T_n | T_n]$$
+$$H_0: \P_\pp \in \{\P_\theta\}_{\theta \in \Theta}, \quad H_1: \P_\pp \not\in \{\P_\theta\}_{\theta \in \Theta}$$
 
-where $Z \sim \chi^2_{K-1}$ and $Z \perp\!\!\!\perp T_n$.
+with $\Theta \subseteq \R^d, d \in \N^*$, then the test statistic is
 
-Let $X_1, \ldots, X_n$ be i.i.d real random variables. The CDF of $X$ is defined as:
+$$\tag{4.17}T_n = n\sum_{j=1}^K\frac{(\hat{p}_j - \P_{\eth}(X=a_j))^2}{\P_{\eth}(X=a_j)} \convd \chi^2_{K-1-d}$$
+
+where $\eth$ is the MLE estimator of $\theta$ given the data.
+
+For example, let us test against any binomial distribution $\mathcal{Binom}(N, p)$ where $p$ is unknown. The support is of cardinal $N+1$, hence $K = N+1$, and the dimension of $\Theta$ is $d=1$; hence, the asymptotic distribution is $\chi^2_{K-1-d} = \chi^2_{N-1}$.
+
+### Lecture 16: Goodness of Fit Test Continued: Kolmogorov-Smirnov test, Kolmogorov-Lilliefors test, Quantile-Quantile Plots
+
+Let $\Xton$ be i.i.d random variables. The CDF of a random variable $X$ is defined as:
 
 $$\forall t \in \R, F(t) = \P[X \leq t]$$
 
-**It completely characterizes the distribution of $X$**.
+The **empirical CDF** of the sample $\Xton$ is defined as:
 
-**The empirical CDF** of $X_1, \ldots, X_n$ is defined as:
+$$\tag{4.18}F_n(t) = \frac1n\sum_{i=1}^n\one\{X_i \leq t\} = \frac{|\{X_i \leq t, i \in \lb 1, n \rb\}|}n$$
 
-$$\tag{4.23}\begin{aligned}\displaystyle \forall t \in \R, F_n(t) &= \frac1n\sum_{i=1}^n\one\{X_i \leq t\} \\ &= \displaystyle \frac{|\{X_i \leq t, 1 \leq i \leq n\}|}n\end{aligned}$$
+The **Glivenko-Cantelli Theorem** (Fundamental theorem of statistics) gives us:
 
-By the LLN,
+$$\tag{4.19}\sup_{t\in\R}|F_n(t) - F(t)| \convas 0$$
 
-$$\tag{4.24}F_n(t) \convas F(t)$$
+By the central limit theorem, as $\P[X \leq t] = F(t)$ corresponds to a Bernoulli distribution, we know that:
 
-**Glivenko-Cantelli Theorem**:
-
-$$\tag{4.25}\sup_{t\in\R}|F_n(t)-F(t)| \convas 0$$
-
-By the CLT:
-
-$$\tag{4.26}\forall t \in \R, \sqrt{n}(F_n(t) - F(t)) \convd \Norm(0, F(t)(1-F(t)))$$
+$$\tag{4.20}\forall t \in \R, \sqrt{n}(F_n(t) - F(t)) \convd \Norm(0, F(t)(1 - F(t)))$$
 
 **Donsker's Theorem**: if $F$ is continuous, then
 
-$$\tag{4.27}\sqrt{n}\sup_{t\in\R}|F_n(t) - F(t)| \convd \sup_{t \in [0, 1]}|\B(t)|$$
+$$\tag{4.21}\sqrt{n}\sup_{t\in\R}|F_n(t) - F(t)| \convd \sup_{t \in [0, 1]} |\B(t)|$$
 
-where $\B$ is a Brownian bridge on $[0, 1]$.
+where $\B$ is the Brownian bridge distribution over $[0, 1]$, and more importantly, a *pivot distribution*.
 
-Let $X_1, \ldots, X_n$ be i.i.d real random variables with unknown CDF $F$ and let $F^0$ be a *continuous* CDF. Let us consider
+**Kolmogorov-Smirnov test**: let $\Xton$ be i.i.d random variables with unknown CDF $F$. Let $F^0$ be a *continuous* CDF. We want to test $H_0: F = F^0$ against $H_1: F \neq F^0$. Let $F_n$ be the empirical CDF of the sample. Then, under $H_0$:
 
-$$H_0: F = F^0, H_1: F \neq F^0$$
+$$T_n = \sqrt{n}\sup_{t \in \R}|F_n(t) - F^0(t)| \convd Z \sim \sup_{t \in [0, 1]}|\B(t)|$$
 
-Let $F_n$ be the empirical CDF of the sample $X_1, \ldots, X_n$. If $H_0$ is true, then $\forall t \in \R, F_n(t) \approx F^0(t)$.
+The associated test is the *Kolmogorov-Smirnov* test, with level $\alpha$:
 
-Let
+$$\tag{4.22}\delta^{KS}_\alpha = \one\{T_n > q_\alpha(Z)\}$$
 
-$$\tag{4.28}T_n = \sup_{t \in \R}\sqrt{n}|F_n(t) - F^0(t)|$$
+**Please be careful**: some tables gives the values for $\frac{T_n}{\sqrt{n}}$, instead of $T_n$.
 
-Then, by Donsker's theorem, if $H_0$ is rtue, then $T_n \convd Z$, where $Z$ has a known distribution, the supremum of an absolute Brownian bridge.
+We can compute $T_n$ with a formula, using the property that $F^0$ is increasing and $F_n$ piecewise constant. Let us reorder our samples $X_{(1)} \leq X_{(2)} \leq \ldots \leq X_{(n)}$. Then:
 
-### Lecture 16: ????
+$$\tag{4.23}T_n = \sqrt{n}\max_{i \in \lb 1, n \rb}\left(\max\left(\left|\frac{i-1}n - F^0(X_{(i)})\right|, \left|\frac{i}n - F^0(X_{(i)})\right|\right)\right)$$
 
-**The Kolmogorov-Smirnov (*KS*) test** with asymptotic level $\alpha$ is given by:
+**Pivotal distribution**: let us consider $U_i = F^0(X_i)$, with associated empirical CDF $G_n$. Under $H_0$, $U_1, \ldots, U_n \iid \Unif(0, 1)$ and
 
-$$\tag{4.29}\delta_\alpha^{KS} = \one\{T_n > q_\alpha\}$$
+$$T_n = \sqrt{n}\sup_{x \in [0, 1]}|G_n(x) - x|$$
 
-where $q_\alpha$ is the $(1-\alpha)$-quantile of $Z$. The p-value of the KS test is given by $\P[Z > T_n | T_n]$.
+Which justifies that $T_n$ is indeed a *pivotal statistic*.
 
-In practice, how to compute $T_n$? The expression of $T_n$ reduces to the following formula:
+To estimate the quantiles numerically, as long as we can generate random values along a uniform distribution, we can proceed as follows:
 
-$$\tag{4.30}T_n = \sqrt{n}\max_{1 \leq i \leq n}\left\{\max\left(\left|\frac{i-1}n - F^0(X_{(i)})\right|, \left|\frac{i}n - F^0(X_{(i)})\right|\right)\right\}$$
+* With $M$ large, simulate $M$ copies of $T_n$, $T_n^1, \ldots, T_n^M$,
+* Estimate the $q_\alpha(T_n)$ quantile with $\hat{q}_\alpha^M(T_n)$ by finding the $1-\alpha$ sample cutoff among the $T_n^m$,
+* Apply the Kolmogorov-Smirnov test with $\delta_\alpha = \one\{T_n > \hat{q}_\alpha^M(T_n)\}$.
 
-where $X_{(1)} \leq \ldots \leq X_{(n)}$ are the reordered samples.
+The $p$-value is then given by:
 
-**$T_n$ is called a pivotal statistic**. If $H_0$ is true, the distribution of $T_n$ does not depend on the distribution of the $X_i$'s and it is easy to reproduce it in simulations. Indeed, let $U_i = F^0(X_i)$, and $G_n$ the empirical CDF of $U$. If $H_0$ is true, then
+$$\pval \approx \frac{|\{T_n^m > T_n, m \in \lb 1, M \rb \}|}M$$
 
-$$U_1, \ldots, U_n \iid \mathcal{U}(0, 1), T_n = \sum_{x \in [0, 1]}\sqrt{n}|G_n(x) - x|$$
+Other distances can measure the difference between two functions than the $\sup$. For example, the Cramér-Von Mises and the Anderson-Darling distances:
 
-Hence, for some large integer $M$:
+$$d^{CVM}(F_n, F) = \int_\R(F_n(t) - F(t))^2dF(t) = \E_F[(F_n(X) - F(X))^2]$$
 
-* simulate $M$ i.i.d copies $T^1_n, \ldots, T^M_n$ of $T_n$,
-* estimate the $(1-\alpha)$-quantile $q_\alpha^{(n)}$ of $T_n$ by taking the sample $(1-\alpha)$-quantile $\hat{q}_\alpha%{(n, M)}$ of $T^1_n, \ldots, T^M_n$,
-* Test with approximate level $\alpha$:
+$$d^{AD}(F_n, F) = \int_\R\frac{(F_n(t) - F(t))^2}{F(t)(1-F(t))}dF(t) = \E_F\left[\frac{(F_n(X) - F(X))^2}{F(X)(1-F(X))}\right]$$
 
-$$\delta_\alpha \approx \one\{T_n > \hat{q}_\alpha%{(n, M)}}$$
+**The Kolmogorov-Smirnov test is not valid against a family of distributions**. For example, if we want to test if $X$ has any Gaussian distribution, we cannot simply plugin the estimators $\hat\mu, \est{\sigma^2}$ into the Kolmogorov-Smirnov estimator.
 
-The p-value of the test is given by:
+**Kolmogorov-Lilliefors test**. However, for a Gaussian distribution,
 
-$$\pval \approx \frac1M|\{T_n^i > T_n, 1 \leq i \leq M\}|$$
+$$T_n = \sup_{t\in \R}|F_n(t) - \Phi_{\hat\mu, \est{\sigma^2}}(t)| \sim Z_n$$
 
-We want to measure the distance between two functions $F_n(t)$ and $F(t)$:
+does *not* depend on any parameter; as such, it is a pivotal statistic, and gives us the Kolmogorov-Lilliefors test:
 
-**Kolmogorov-Smirnov**:
+$$\tag{4.24}\delta^{KL}_\alpha = \one\{T_n > q_\alpha(Z_n)\}$$
 
-$$\tag{4.31}d(F_n, F) = \sup_{t\in\R}|F_n(t) - F(t)|$$
+**Quantile-quantile (*QQ*) plots**: informal visual cues to decide whether it's likely a distribution is close to another one. Given a sample CDF $F_n$ and a target CDF $F$, we plot:
 
-**Cramér-Von Mises**:
+$$\tag{4.25}\left(F^{-1}\left(\frac1n\right), F_n^{-1}\left(\frac1n\right)\right), \left(F^{-1}\left(\frac2n\right), F_n^{-1}\left(\frac2n\right)\right), \ldots, \left(F^{-1}\left(\frac{n-1}n\right), F_n^{-1}\left(\frac{n-1}n\right)\right)$$
 
-$$\tag{4.32}d^2(F_n, F) = \int_\R\left(F_n(t) - F(t)\right)^2dF(t) = \E_F[(F_n(X) - F(X))^2]$$
+If the plot is aligned along the $y = x$ axis, they are likely close to each other. There are four patterns of differences between distributions:
 
-**Anderson-Darling**:
+* *Heavier tails*: below > above the diagonal.
+* *Lighter tails*: above > below the diagonal.
+* *Right-skewed*: above > below > above the diagonal.
+* *Left-skewed*: below > above > below the diagonal.
 
-$$\tag{4.33}d^2(F_n, F) = \int_\R\frac{(F_n(t) - F(t))^2}{F(t)(1-F(t))}dF(t)
+## Unit 5: Bayesian Statistics
 
-If I want to test if $X$ has a Gaussian distribution, but without knowing the parameters, let us use plug-in:
+### Lecture 17: Introduction to Bayesian Statistics
 
-$$\tag{4.34}\sum_{t\in\R}|F_n(t) - \Phi_{\est{\mu}, \est{\sigma^2}}(t)|$$
+Bayesian inference conceptually amounts to weight the likelihood $L_n(\theta)$ by a prior knowledge we might have on $\theta$.
 
-Where $\est{\mu} = \bar{X}_n$ and $\est{\sigma^2} = S_n^2$, and $\Phi_{\mu, \sigma^2}$ is the CDF of $\Norm(\mu, \sigma^2)$.
+Given a statistical model $\statmodel$, we technically model our parameter $\tth$ as if it were a random variable. We therefore define the **prior distribution** (PDF):
 
-In this case, **Donsker's theorem is no longer valid**. This is a very common and serious mistake!
+$$\pi(\tth)$$
 
-**Kolmogorov-Lilliefors test**: instead, we compute the quantils for the test statistic:
+Let $\Xton$. We note $L_n(\Xton|\tth)$ the joint probability distribution of $\Xton$ conditioned on $\tth$ where $\tth \sim \pi$. This is exactly the likelihood from the frequentist approach.
 
-$$\sum_{t\in\R}|F_n(t) - \Phi_{\est{\mu}, \est{\sigma^2}}(t)|$$
+**Bayes' formula**. The **posterior distribution** verifies:
 
-They do not depend on unknown parameters!
+$$\tag{5.1}\forall \tth \in \Theta, \pi(\tth|\Xton) \propto \pi(\tth)L_n(\Xton | \tth)$$
 
-**Quantile-Quantile (*QQ*) plots**: they provide a visual way to perform G-F tests. It's a quick and easy check to see if a distribution is plausible. The main idea is to check visually if the plot of $F_n$ is close to that of $F$, or equivalently if the plot of $F_n^{-1}$ is close to that of $F^{-1}$.
+The constant is the normalization factor to ensure the result is a proper distribution, and does not depend on $\tth$:
 
-The test consists on checking whether the points
+$$\pi(\tth|\Xton) = \frac{\pi(\tth)L_n(\Xton | \tth)}{\int_\Theta\pi(\tth)L_n(\Xton | \tth)d\tth}$$
 
-$$\tag{4.34}\left(F^{-1}\left(\frac1n\right), F_n^{-1}\left(\frac1n\right)\right), \left(F^{-1}\left(\frac2n\right), F_n^{-1}\left(\frac2n\right)\right), \ldots, \left(F^{-1}\left(\frac{n-1}n\right), F_n^{-1}\left(\frac{n-1}n\right)\right)$$
+We can often use an **improper prior**, i.e. a prior that is not a proper probability distribution (whose integral diverges), and still get a proper posterior. For example, the improper prior $\pi(\tth) = 1$ on $\Theta$ gives the likelihood as a posterior.
 
-are aligned along $y = x$. $F_n$ is not technically invertible, but we define
+### Lecture 18: Jeffrey's Prior and Bayesian Confidence Interval
 
-$$\tag{4.35}F_n^{-1}\left(\frac{i}n\right) = X_{(i)}$$
+**Jeffreys Prior**: it is defined as:
 
-where $X_{(i)}$ are the ordered samples.
+$$\tag{5.2} \pi_J(\tth) \propto \sqrt{\det I(\tth)}$$
+
+where $I(\tth)$ is the Fisher information. This prior is **invariant by reparametrization**, which means that if we have $\eeta = \phi(\tth)$, then the same prior gives us a probability distribution for $\eeta$ verifying:
+
+$$\tag{5.3}\tilde\pi_J(\eeta) \propto \sqrt{\det \tilde I(\eeta)}$$
+
+The change of parameter follows the following formula:
+
+$$\tag{5.4}\tilde\pi_J(\eeta) = \det(\nabla \phi^{-1}(\eeta)) \pi_J(\tth)$$
+
+**Bayesian confidence region**. Let $\alpha \in (0, 1)$. A *Bayesian confidence region with level $\alpha$* is a random subset $\mathcal{R} \subset \Theta$ depending on $\Xton$ (and the prior $\pi$) such that:
+
+$$\tag{5.5}\P[\tth \in \mathcal{R} | \Xton] \geq 1 - \alpha$$
+
+*Bayesian confidence region and confidence interval are **distinct** notions*.
+
+The Bayesian framework can be used to estimate the true underlying parameter. In that case, it is used to build a new class of estimators, based on the posterior distribution.
+
+The **Bayes estimator** (*posterior mean*) is defined as:
+
+$$\tag{5.6}\etth_{(\pi)} = \int_\Theta\tth\pi(\tth | \Xton)d\tth$$
+
+The **Maximum a posteriori (*MAP*) estimator** is defined as:
+
+$$\tag{5.7}\etth^{MAP}_{(\pi)} = \argmax{\theta\in\Theta}\pi(\tth | \Xton)$$
+
+The MAP is equivalent to the MLE, if the prior is uniform.
 
 ## Addendum A: Frequent distributions
 
@@ -994,7 +914,7 @@ where $X_{(i)}$ are the ordered samples.
 
 ### Description [A.1]
 
-Notation: $\mathcal{N}(\mu, \sigma^2)$
+Notation: $\Norm(\mu, \sigma^2)$
 
 Parameters: $\mu \in \R, \sigma^2 > 0$
 
@@ -1002,7 +922,7 @@ Support: $E = \R$
 
 Probability density function (*PDF*):
 
-$$\tag{A.1.1} f_{\mu, \sigma^2}(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
+$$\tag{A.1.1} f_{\mu, \sigma^2}(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac1{2\sigma^2}(x-\mu)^2\right)$$
 
 The cumulative density function (*CDF*) is noted $\Phi(x)$.
 
@@ -1020,16 +940,24 @@ $$\tag{A.1.3} \P[Z \leq q_\alpha] = 1 - \alpha$$
 
 $$\tag{A.1.4} \P[|Z| \leq q_{\alpha/2}] = 1 - \alpha$$
 
-$q_{0.1} \approx 1.281713$, $q_{0.05} \approx 1.64467$, $q_{0.025} \approx 1.95905$,
-$q_{0.01} \approx 2.32409$, $q_{0.005} \approx 2.572466$.
+$q_{0.1} \approx 1.28155$, $q_{0.05} \approx 1.64485$, $q_{0.025} \approx 1.95996$,
+$q_{0.01} \approx 2.32635$, $q_{0.005} \approx 2.57583$.
 
 *Fischer information*:
 
 $$\tag{A.1.5} I(\mu, \sigma^2) = \begin{pmatrix} 1/\sigma^2 & 0 \\ 0 & 1/(2\sigma^4) \end{pmatrix}$$
 
+*Likelihood*:
+
+$$\tag{A.1.6} L_n(\Xton, \mu, \sigma^2) = \frac1{(2\pi\sigma^2)^{\frac{n}2}}\exp\left(-\frac1{2\sigma^2}\sum_{i=1}^n(X_i - \mu)^2\right)$$
+
 *Log-likelihood*:
 
-$$\tag{A.1.6} \ell_d(x_1, \ldots, x_d, \mu, \sigma^2) = -\frac{d}2\ln2\pi -\frac{d}2\ln\sigma^2 - \frac1{2\sigma^2}\sum_{i=1}^d(x_i - \mu)^2$$
+$$\tag{A.1.7} \ell_n(\Xton, \mu, \sigma^2) = -\frac{n}2\ln2\pi -\frac{n}2\ln\sigma^2 - \frac1{2\sigma^2}\sum_{i=1}^n(X_i - \mu)^2$$
+
+*Maximum likelihood estimator*:
+
+$$\tag{A.1.8} \hat\mu_n = \bar{X}_n, \quad \est{\sigma^2}_n = \frac1n\sum_{i=1}^n(X_i - \bar{X}_n)^2$$
 
 ### Moments [A.1]
 
@@ -1069,41 +997,89 @@ Moments: $\E[X^k] = p$
 
 Fischer information: $I(p) = \frac{1}{p(1-p)}$
 
+*Likelihood*:
+
+$$\tag{A.2.2} L_n(\Xton, p) = p^{\discr \sum_{i=1}^nX_i}(1-p)^{\discr n-\sum_{i=1}^nX_i}$$
+
 *Log-likelihood*:
 
-$$\tag{A.2.2} \ell_d(x_1, \ldots, x_d, p) = \ln p\sum_{i=1}^dx_i + \ln(1-p)\left(d - \sum_{i=1}^dx_i\right)$$
+$$\tag{A.2.3} \ell_n(\Xton, p) = \ln p\sum_{i=1}^nX_i + \ln(1-p)\left(n - \sum_{i=1}^nX_i\right)$$
+
+*Maximum likelihood estimator*:
+
+$$\tag{A.2.4} \hat{p}_n = \frac{\sum_iX_i}n$$
 
 ## Part 3: Binomial distribution
 
 ### Description [A.3]
 
-Notation: $\mathcal{B}(n, p)$
+Notation: $\Binom(N, p)$
 
-Parameters: $n \in \N, p \in (0, 1)$
+Parameters: $N \in \N^*, p \in (0, 1)$
 
-Support: $E = [\![0, n]\!]$
+Support: $E = \lb 0, N \rb$
 
 Probability mass function (*PMF*):
 
-$$\tag{A.3.1} f_{n, p}(k) = \binom{n}kp^k(1-p)^{n-k}$$
+$$\tag{A.3.1} f_{N, p}(k) = \binom{N}kp^k(1-p)^{N-k}$$
 
 ### Properties [A.3]
 
-Mean: $\E[X] = np$
+Mean: $\E[X] = Np$
 
-Variance: $\V[X] = np(1-p)$
+Variance: $\V[X] = Np(1-p)$
 
-Fischer information: $I_n(p) = \frac{n}{p(1-p)}$ (for fixed $n$)
+Fischer information: $I_N(p) = \frac{N}{p(1-p)}$ (for fixed $N$)
+
+*Likelihood*:
+
+$$\tag{A.3.2} L_n(\Xton, N, p) = \prod_{i=1}^n\binom{N}{X_i} p^{\discr \sum_{i=1}^nX_i}(1-p)^{\discr nN - \sum_{i=1}^nX_i}$$
 
 *Log-likelihood*:
 
-$$\tag{A.3.2} \ell_d(x_1, \ldots, x_d, n, p) = \sum_{i=1}^d\ln\binom{n}{x_i} + \ln p \sum_{i=1}^dx_i + \ln(1-p)\left(nd - \sum_{i=1}^dx_i\right)$$
+$$\tag{A.3.3} \ell_n(\Xton, N, p) = \sum_{i=1}^n\ln\binom{N}{X_i} + \ln p \sum_{i=1}^nX_i + \ln(1-p)\left(nN - \sum_{i=1}^nX_i\right)$$
 
-## Part 4: Poisson distribution
+*Maximum likelihood estimator* (for fixed $N$):
+
+$$\tag{A.3.4} \hat{p}_n = \frac{\sum_iX_i}{nN}$$
+
+## Part 4: Categorical distribution
 
 ### Description [A.4]
 
-Notation: $\mathcal{Poi}(\lambda)$
+Notation: $\mathcal{Cat}(\pp)$
+
+Parameters: $\pp \in \Delta_K = \{\pp \in (0, 1)^K, \sum_kp_k = 1\}$
+
+Support: $E = \{a_1, \ldots, a_K\} \sim \lb 1, K \rb$
+
+Probability mass function (*PMF*):
+
+$$\tag{A.4.1} f_\pp(a_k) = p_k$$
+
+### Properties [A.4]
+
+Given a sample $\Xton$, we define the number of occurences of each outcome:
+
+$$\forall k \in \lb 1, K \rb, N_k = \sum_{i=1}^n\one\{X_i = a_k\} = |\{i \in \lb 1, n \rb, X_i = a_k\}|$$
+
+*Likelihood*:
+
+$$\tag{A.4.1} L_n(\Xton, \pp) = \prod_{k=1}^Kp_k^{N_k}$$
+
+*Log-likelihood*:
+
+$$\tag{A.4.2} \ell_n(\Xton, \pp) = \sum_{k=1}^KN_k\ln p_k$$
+
+*Maximum likelihood estimator* (under the constraint $\sum_kp_k = 1$):
+
+$$\tag{A.4.3} \forall k \in \lb 1, K \rb, \hat{\pp}_n = \left(\frac{N_1}n, \ldots, \frac{N_K}n\right)$$
+
+## Part 5: Poisson distribution
+
+### Description [A.5]
+
+Notation: $\Poiss(\lambda)$
 
 Parameters: $\lambda > 0$
 
@@ -1111,9 +1087,9 @@ Support: $E = \N$
 
 Probability mass function (*PMF*):
 
-$$\tag{A.4.1} f_\lambda(k) = \frac{\lambda^ke^{-\lambda}}{k!}$$
+$$\tag{A.5.1} f_\lambda(k) = \frac{\lambda^ke^{-\lambda}}{k!}$$
 
-### Properties [A.4]
+### Properties [A.5]
 
 Mean: $\E[X] = \lambda$
 
@@ -1121,15 +1097,23 @@ Variance: $\V[X] = \lambda$
 
 Fischer information: $I(\lambda) = \frac1\lambda$
 
+*Likelihood*:
+
+$$\tag{A.5.2} L_n(\Xton, \lambda) = \frac{1}{\discr \prod_{i=1}^nX_i!} \lambda^{\discr \sum_{i=1}^nX_i} e^{-n\lambda}$$
+
 *Log-likelihood*:
 
-$$\tag{A.4.2} \ell_d(x_1, \ldots, x_d, \lambda) = \ln\lambda\sum_{i=1}^dx_i - d\lambda - \sum_{i=1}^d\ln(x_i!)$$
+$$\tag{A.5.3} \ell_n(\Xton, \lambda) = \ln\lambda\sum_{i=1}^nX_i - n\lambda - \sum_{i=1}^n\ln(X_i!)$$
 
-## Part 5: Uniform distribution
+*Maximum likelihood estimator*:
 
-### Description [A.5]
+$$\tag{A.5.4} \hat{\lambda}_n = \bar{X}_n = \frac1n\sum_{i=1}^nX_i$$
 
-Notation: $\mathcal{U}(a, b)$
+## Part 6: Uniform distribution
+
+### Description [A.6]
+
+Notation: $\Unif(a, b)$
 
 Parameters: $a, b \in \R, a < b$ (usually, $a = 0$)
 
@@ -1137,13 +1121,13 @@ Support: $E = [a, b] \subset \R$
 
 Probability density function (*PDF*):
 
-$$\tag{A.5.1} f_{a, b}(x) = \frac1{b-a}\one\{a \leq x \leq b\}$$
+$$\tag{A.6.1} f_{a, b}(x) = \frac1{b-a}\one\{a \leq x \leq b\}$$
 
 Cumulative density function (*CDF*):
 
-$$\tag{A.5.2} F_{a, b}(x) = \begin{cases}\displaystyle 0 & \text{if}\quad x < a \\ \displaystyle \frac{x-a}{b-a} & \text{if}\quad a \leq x \leq b \\ \displaystyle 1 & \text{if}\quad x > b \end{cases}$$
+$$\tag{A.6.2} F_{a, b}(x) = \begin{cases}\displaystyle 0 & \text{if}\quad x < a \\ \displaystyle \frac{x-a}{b-a} & \text{if}\quad a \leq x \leq b \\ \displaystyle 1 & \text{if}\quad x > b \end{cases}$$
 
-### Properties [A.5]
+### Properties [A.6]
 
 Mean: $\E[X] = \frac{a+b}2$
 
@@ -1151,15 +1135,23 @@ Variance: $\V[X] = \frac1{12}(b-a)^2$
 
 Moments: $\E[X^k] = \frac{1}{n+1}\sum_{i=0}^ka^ib^{k-i}$
 
+*Likelihood*:
+
+$$\tag{A.6.3} L_n(\Xton, a, b) = \frac1{(b - a)^n}\one\left\{\min_{i \in \lb 1, n \rb}X_i \geq a\right\}\one\left\{\max_{i \in \lb 1, n \rb}X_i \leq b\right\}$$
+
 *Log-likelihood*:
 
-$$\tag{A.5.3} \ell_d(x_1, \ldots, x_d, a, b) = d\ln\frac1{b-a} + \ln\one\left\{a \leq \min_{1 \leq i \leq d}x_i\right\} + \ln\one\left\{\max_{1 \leq i \leq d}x_i \leq b\right\}$$
+$$\tag{A.6.4} \ell_n(\Xton, a, b) = n\ln\frac1{b-a} + \ln\one\left\{\min_{i \in \lb 1, n \rb}X_i \geq a\right\} + \ln\one\left\{\max_{i \in \lb 1, n \rb}X_i \leq b\right\}$$
 
-## Part 6: Exponential distribution
+*Maximum likelihood estimator* (cannot differentiate the log-likelihood):
 
-### Description [A.6]
+$$\tag{A.6.5} \hat{a}_n = \min_{i \in \lb 1, n \rb}X_i, \quad \hat{b}_n = \max_{i \in \lb 1, n \rb}X_i$$
 
-Notation: $\mathcal{Exp}(\lambda)$
+## Part 7: Exponential distribution
+
+### Description [A.7]
+
+Notation: $\Exp(\lambda)$
 
 Parameters: $\lambda > 0$
 
@@ -1167,13 +1159,13 @@ Support: $E = [0, +\infty)$
 
 Probability density function (*PDF*):
 
-$$\tag{A.6.1} f_\lambda(x) = \lambda \exp(-\lambda x)\one\{x \geq 0\}$$
+$$\tag{A.7.1} f_\lambda(x) = \lambda e^{-\lambda x}\one\{x \geq 0\}$$
 
 Cumulative density function (*CDF*):
 
-$$\tag{A.6.2} F_\lambda(x) = (1 - \exp(-\lambda x))\one\{x \geq 0\}$$
+$$\tag{A.7.2} F_\lambda(x) = (1 - e^{-\lambda x})\one\{x \geq 0\}$$
 
-### Properties [A.6]
+### Properties [A.7]
 
 Mean: $\E[X] = \frac1\lambda$
 
@@ -1183,17 +1175,25 @@ Moments: $\E[X^k] = \frac{k!}{\lambda^k}$
 
 Fischer Information: $I(\lambda) = \frac1{\lambda^2}$
 
+*Likelihood*:
+
+$$\tag{A.7.3} L_n(\Xton, \lambda) = \lambda^n \exp\left(-\lambda \sum_{i=1}^nX_i\right)\one\left\{\min_{i \in \lb 1, n \rb}X_i \geq 0\right\}$$
+
 *Log-likelihood*:
 
-$$\tag{A.6.3} \ell_d(x_1, \ldots, x_d, \lambda) = d\ln\lambda -\lambda\sum_{i=1}^dx_i+\ln\one\left\{0 \leq \min_{1\leq i \leq d}x_i\right\}$$
+$$\tag{A.7.4} \ell_n(\Xton, \lambda) = n\ln\lambda - \lambda\sum_{i=1}^nX_i+\ln\one\left\{\min_{i \in \lb 1, n \rb}X_i \geq 0\right\}$$
+
+*Maximum likelihood estimator*:
+
+$$\tag{A.7.5} \hat{\lambda}_n = \frac{n}{\sum_iX_i} = \frac1{\bar{X}_n}$$
 
 Memorylessness: $\P[X > s+t | X > s] = \P[X > t]$
 
-## Part 7: Multivariate normal distribution
+## Part 8: Multivariate normal distribution
 
-### Description [A.7]
+### Description [A.8]
 
-Notation: $\mathcal{N}_d(\mmu, \SSigma)$
+Notation: $\Norm_d(\mmu, \SSigma)$
 
 Parameters: $\mmu \in \R^d, \SSigma\in \R^{d\times d}, \SSigma \succ 0$
 
@@ -1201,17 +1201,17 @@ Support: $E = \R^d$
 
 Probability density function (*PDF*):
 
-$$\tag{A.7.1} f_{\mmu, \SSigma}(\xx) = \frac{1}{\sqrt{(2\pi)^d|\SSigma|}}\exp\left(-\frac12(\xx - \mmu)^T\SSigma^{-1}(\xx - \mmu)\right)$$
+$$\tag{A.8.1} f_{\mmu, \SSigma}(\xx) = \frac{1}{\sqrt{(2\pi)^d|\SSigma|}}\exp\left(-\frac12(\xx - \mmu)^T\SSigma^{-1}(\xx - \mmu)\right)$$
 
-### Properties [A.7]
+### Properties [A.8]
 
 Mean: $\E[\XX] = \mmu$
 
 Variance: $\V[\XX] = \SSigma$
 
-## Part 8: Cauchy
+## Part 9: Cauchy distribution
 
-### Description [A.8]
+### Description [A.9]
 
 Notation: $\mathcal{Cau}(x_0, \gamma)$
 
@@ -1221,13 +1221,13 @@ Support: $E = \R$
 
 Probability density function (*PDF*):
 
-$$\tag{A.8.1} f_{x_0, \gamma}(x) = \frac{1}{\pi\gamma}\frac{\gamma^2}{\gamma^2 + (x-x_0)^2}$$
+$$\tag{A.9.1} f_{x_0, \gamma}(x) = \frac{1}{\pi\gamma}\frac{\gamma^2}{\gamma^2 + (x-x_0)^2}$$
 
 Cumulative density function (*CDF*):
 
-$$\tag{A.8.2} F_{x_0, \gamma}(x) = \frac12 + \frac1{\pi}\arctan\frac{x-x_0}{\gamma}$$
+$$\tag{A.9.2} F_{x_0, \gamma}(x) = \frac12 + \frac1{\pi}\arctan\frac{x-x_0}{\gamma}$$
 
-### Properties [A.8]
+### Properties [A.9]
 
 Mean: undefined
 
@@ -1235,9 +1235,9 @@ Variance: undefined
 
 Moments: undefined
 
-## Part 9: Laplace
+## Part 10: Laplace distribution
 
-### Description [A.9]
+### Description [A.10]
 
 Notation: $\mathcal{Lapl}(\mu, b)$
 
@@ -1247,25 +1247,103 @@ Support: $E = \R$
 
 Probability density function (*PDF*):
 
-$$\tag{A.9.1} f_{\mu, b}(x) = \frac{1}{2b}\exp\left(-\frac{|x-\mu|}{b}\right)$$
+$$\tag{A.10.1} f_{\mu, b}(x) = \frac{1}{2b}\exp\left(-\frac{|x-\mu|}{b}\right)$$
 
 Cumulative density function (*CDF*):
 
-$$\tag{A.9.2} F_{\mu, b}(x) = \begin{cases} \displaystyle \frac12\exp\left(\frac{x-\mu}{b}\right) & \text{if}\quad x \leq \mu \\ \displaystyle 1 - \frac12\exp\left(\frac{\mu - x}{b}\right) & \text{if}\quad x > \mu \end{cases}$$
+$$\tag{A.10.2} F_{\mu, b}(x) = \begin{cases} \displaystyle \frac12\exp\left(\frac{x-\mu}{b}\right) & \text{if}\quad x \leq \mu \\ \displaystyle 1 - \frac12\exp\left(\frac{\mu - x}{b}\right) & \text{if}\quad x > \mu \end{cases}$$
 
-### Properties [A.9]
+### Properties [A.10]
 
 Mean: $\E[X] = \mu$
 
 Variance: $\V[X] = 2b^2$
 
+*Likelihood*:
+
+$$\tag{A.10.3} L_n(\Xton, \mu, b) = \frac1{(2b)^n}\exp\left(-\frac1b\sum_{i=1}^n|X_i - \mu|\right)$$
+
 *Log-likelihood*:
 
-$$\tag{A.9.3} \ell_d(x_1, \ldots, x_d, \mu, b) = -d\ln2 -d\ln b - \frac1b\sum_{i=1}^d|x_i - \mu|$$
+$$\tag{A.10.4} \ell_n(\Xton, \mu, b) = -n\ln2 -n\ln b - \frac1b\sum_{i=1}^n|X_i - \mu|$$
 
 *Maximum Likelihood Estimators*:
 
-$$\hat{\mu} = \Med{1\leq i \leq d}X_i, \hat{b} = \frac{1}d\sum_{i=1}^d|X_i - \hat{\mu}|$$
+$$\hat{\mu}_n = \Med{i \in \lb 1, n \rb}X_i, \quad \hat{b}_n = \frac{1}n\sum_{i=1}^n|X_i - \hat{\mu}|$$
+
+## Part 11: Chi-squared distribution
+
+### Description [A.11]
+
+Notation: $\chi^2_d$ ($d$ fixed)
+
+Support: $E = [0, +\infty)$
+
+Definition: $Z_1^2 + \ldots Z_d^2 \sim \chi^2_d$, where $Z_1, \ldots, Z_d \iid \Norm(0, 1)$.
+
+Probability density function (*PDF*):
+
+$$\tag{A.11.1} f_d(x) = \frac{1}{2^{d/2}\Gamma(d/2)}x^{d/2-1}e^{-x/2}$$
+
+### Properties [A.11]
+
+Mean: $\E[X] = d$
+
+Mode: $\Mode(X) = \max(d-2, 0)$
+
+Variance: $\V[X] = 2d$
+
+Useful for many test statistics as a pivot distribution.
+
+## Part 12: Beta distribution
+
+### Description [A.12]
+
+Notation: $\beta(a, b)$
+
+Parameters: $a, b \in (0, +\infty)$
+
+Support: $E = [0, 1]$ or $(0, 1)$
+
+Probability density function (*PDF*):
+
+$$\tag{A.12.1} f_{a, b}(x) = \frac{x^{a-1}(1-x)^{b-1}}{B(a, b)}$$
+
+where $B(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}$.
+
+### Properties [A.12]
+
+Mean: $\E[X] = \frac{a}{a+b}$
+
+Mode: $\Mode(X) = \frac{a - 1}{a + b - 2}$
+
+Variance: $\V[X] = \frac{ab}{(a+b)^2(a+b+1)}$
+
+Useful as the *Bayesian conjugate for Bernoulli distributions*.
+
+## Part 13: Gamma distribution
+
+### Description [A.13]
+
+Notation: $\mathcal{Gamma}(\alpha, \beta)$
+
+Parameters: $\alpha, \beta \in (0, +\infty)$
+
+Support: $E = (0, +\infty)$
+
+Probability density function (*PDF*):
+
+$$\tag{A.13.1} f_{\alpha, \beta}(x) = \frac{\beta^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{-\beta x}$$
+
+### Properties [A.13]
+
+Mean: $\E[X] = \frac{\alpha}{\beta}$
+
+Mode: $\Mode(X) = \frac{\alpha - 1}{\beta}$
+
+Variance: $\V[X] = \frac{\alpha}{\beta^2}$
+
+Useful as the *Bayesian conjugate for exponential distributions*.
 
 # Addendum B: Notable relations
 
