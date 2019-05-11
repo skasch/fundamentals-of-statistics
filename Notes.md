@@ -908,6 +908,163 @@ $$\tag{5.7}\etth^{MAP}_{(\pi)} = \argmax{\theta\in\Theta}\pi(\tth | \Xton)$$
 
 The MAP is equivalent to the MLE, if the prior is uniform.
 
+## Unit 6: Linear Regression
+
+### Lecture 19: Linear Regression 1
+
+Given two random variables $\XX$ and $Y$, how can we predict the values of $Y$ given $\XX$?
+
+Let us consider $(X_1, Y_1), \ldots, (X_n, Y_n) \iid \P$ where $\P$ is an unknown joint distribution. $\P$ can be described entirely by:
+
+$$g(X) = \int f(X, y)dy, \quad h(Y|X=x) = \frac{f(x, Y)}{g(x)}$$
+
+where $f$ is the joint PDF, $g$ the marginal density of $X$ and $h$ the conditional density. What we are interested in is $h(Y|X)$.
+
+**Regression function**: For a partial description, we can consider instead the conditional expection of $Y$ given $X=x$:
+
+$$\tag{6.1}x \mapsto f(x) = \E[Y | X=x] = \int yh(y|x)dy$$
+
+We can also consider different descriptions of the distribution, like the median, quantiles or the variance.
+
+**Linear regression**: trying to fit any function to $\E[Y | X=x]$ is a nonparametric problem; therefore, we restrict the problem to the tractable one of linear function:
+
+$$f: x \mapsto a + bx$$
+
+**Theoretical linear regression**: let $X, Y$ be two random variables with two moments such as $\V[X] > 0$. The theoretical linear regression of $Y$ on $X$ is the line $\true{a} + \true{b}x$ where
+
+$$\tag{6.2}(\true a, \true b) = \argmin{(a, b) \in \R^2}\E\left[(Y - a - bX)^2\right]$$
+
+Which gives:
+
+$$\tag{6.3}\true b = \frac{\Cov(X, Y)}{\V[X]}, \quad \true a = \E[Y] - b^* \E[X]$$
+
+**Noise**: we model the noise of $Y$ around the regression line by a random variable $\varepsilon = Y - \true a - \true b X$, such as:
+
+$$\E[\varepsilon] = 0, \quad \Cov(X, \varepsilon) = 0$$
+
+We have to estimate $\true a$ and $\true b$ from the data. We have $n$ random pairs $(X_1, Y_1), \ldots, (X_n, Y_n) \iid (X, Y)$ such as:
+
+$$\tag{6.4} Y_i = \true a + \true b X_i + \varepsilon_i$$
+
+The **Least Squares Estimator (*LSE*)** of $(\true a, \true b)$ is the minimizer of the squared sum:
+
+$$\tag{6.5} (\estn a, \estn b) = \argmin{(a, b) \in \R^2}\sum_{i=1}^n(Y_i - a - bX)^2$$
+
+The estimators are given by:
+
+$$\tag{6.6} \estn b = \frac{\overline{XY} - \bar{X}\bar{Y}}{\overline{X^2} - \bar{X}^2}, \quad \estn a = \bar{Y} - \estn b \bar{X}$$
+
+The **Multivariate Regression** is given by:
+
+$$\tag{6.7}Y_i = \sum_{j=1}^pX_i^{(j)}\true\beta_j + \varepsilon_i= \underbrace{\XX_i^\top}_{1 \times p}\underbrace{\true\bbeta}_{p \times 1} + \varepsilon_i$$
+
+We can assuming that the $X_i^{(1)}$ are 1 for the intercept. We call:
+
+* the *explanatory variables* or *covariates* the $\XX_i \in \R^p$,
+* the *response*, *dependent* or *explained variable* the $Y_i$,
+* if $\true\bbeta = (\true a, \true\bb^\top)^\top$, $\true\beta_1 = \true a$ is the *intercept*.
+* the $\varepsilon_i$ is the *noise*, satisfying $\CCov(\XX_i, \varepsilon_i) = \zz$.
+
+The **Multivariate Least Squares Estimator (*LSE*)** of $\true\bbeta$ is the minimizer of the sum of square errors:
+
+$$\tag{6.8}\estn \bbeta = \argmin{\bbeta \in \R^p}\sum_{i=1}^n(Y_i - \XX_i^\top\bbeta)^2$$
+
+**Matrix form**: we can rewrite these expressions. Let $\YY = (Y_1, \ldots, Y_n)^\top \in \R^n$, and $\eepsilon = (\varepsilon_1, \ldots, \varepsilon_n)^\top$. Let
+
+$$\tag{6.9}\X = \begin{pmatrix} \XX_1^\top \\ \vdots \\ \XX_n^\top \end{pmatrix} \in \R^{n \times p}$$
+
+$\X$ is called the **design matrix**. The regression is given by:
+
+$$\tag{6.10}\YY = \X\true\bbeta + \eepsilon$$
+
+and the LSE is given by:
+
+$$\tag{6.11} \estn \bbeta = \argmin{\bbeta \in \R^p} \|\YY - \X\bbeta\|^2_2$$
+
+### Lecture 20: Linear Regression 2
+
+Let us suppose $n \geq p$ and $\rank(\X) = p$. If we write:
+
+$$F(\bbeta)  = \|\YY - \X\bbeta\|^2_2 = (\YY - \X\bbeta)^\top(\YY - \X\bbeta)$$
+
+Then:
+
+$$\nabla F(\bbeta) = 2 \X^\top(\YY - \X\bbeta)$$
+
+**Least squares estimator**: setting $\nabla F(\bbeta) = \zz$ gives us the expression of $\est \bbeta$:
+
+$$\tag{6.12} \est \bbeta = (\X^\top\X)^{-1}\X^\top\YY$$
+
+**Geometric interpretation**: $\X\est\bbeta$ is the orthogonal projection of $\YY$ onto the subspace spanned by the columns of $\X$:
+
+$$\tag{6.13} \X\est\bbeta = P\YY$$
+
+where $P = \X(\X^\top\X)^{-1}\X^\top$ is the expression of the projector.
+
+**Statistic inference**: let us suppose that:
+
+* The design matrix $\X$ is deterministic and $\rank(\X) = p$.
+* The model is **homoscedastic**: $\varepsilon_1, \ldots, \varepsilon_n$ are i.i.d.
+* The noise is Gaussian: $\eepsilon \sim \Norm_n(\zz, \sigma^2I_n)$.
+
+We therefore have:
+
+$$\tag{6.14}\YY \sim \Norm_n(\X\true\bbeta, \sigma^2I_n)$$
+
+Properties of the LSE:
+
+$$\tag{6.15}\est\bbeta \sim \Norm_p(\true\bbeta, \sigma^2(\X^\top\X)^{-1})$$
+
+The quadratic risk of $\est\bbeta$ is given by:
+
+$$\tag{6.16}\E\left[\|\est\bbeta - \true\bbeta\|^2_2\right] = \sigma^2\Tr\left((\X^\top\X)^{-1}\right)$$
+
+The prediction error is given by:
+
+$$\tag{6.17}\E\left[\|\YY - \X\est\bbeta\|^2_2\right] = \sigma^2(n - p)$$
+
+The unbiased estimator of $\sigma^2$ is:
+
+$$\tag{6.18}\est{\sigma^2} = \frac{1}{n-p}\|\YY - \X\est\bbeta\|^2_2 = \frac1{n-p}\sum_{i=1}^n\hat{\varepsilon}_i^2$$
+
+By **Cochran's Theorem**:
+
+$$\tag{6.19} (n-p)\frac{\est{\sigma^2}}{\sigma^2} \sim \chi^2_{n-p}, \quad \hat\bbeta \perp \est{\sigma^2}$$
+
+**Significance test**: let us test $H_0: \beta_j = 0$ against $H_1: \beta_j \neq 0$. Let us call
+
+$$\gamma_j = \left((\X^\top\X)^{-1}\right)_{jj} > 0$$
+
+then:
+
+$$\tag{6.20}\frac{\est{\beta}_j- \beta_j}{\sqrt{\est{\sigma^2}\gamma_j}} \sim t_{n-p}$$
+
+We can define the test statistic for our test:
+
+$$\tag{6.21}T_n^{(j)} = \frac{\est{\beta}_j}{\sqrt{\est{\sigma^2}\gamma_j}}$$
+
+The test with non-asymptotic level $\alpha$ is given by:
+
+$$\tag{6.22}\psi_\alpha^{(j)} = \one\{|T_n^{(j)}| > q_{\alpha/2}(t_{n-p})\}$$
+
+**Bonferroni's test**: if we want to test the significance level of multiple tests at the same time, we cannot use the same level $\alpha$ for each of them. We must use a stricter test for each of them. Let us consider $S \subseteq \{1, \ldots, p\}$. Let us consider
+
+$$H_0: \forall j \in S, \beta_j = 0, \quad H_1: \exists j \in S, \beta_j \neq 0$$
+
+The *Bonferroni's test* with significance level $\alpha$ is given by:
+
+$$\tag{6.22}\psi_\alpha^{(S)} = \max_{j \in S}\psi_{\alpha/K}^{(j)}$$
+
+where $K = |S|$. The rejection region therefore is the union of all rejection regions:
+
+$$\tag{6.23}R_\alpha^{(S)} = \bigcup_{j \in S}R_{\alpha/K}^{(j)}$$
+
+This test has nonasymptotic level at most $\alpha$:
+
+$$\P_{H_0}\left[R_\alpha^{(S)}\right] \leq \sum_{j\in S}\P_{H_0}\left[R_{\alpha/K}^{(j)}\right] = \alpha$$
+
+This test also works for implicit testing (for example, $\beta_1 \geq \beta_2$).
+
 ## Addendum A: Frequent distributions
 
 ### Part 1: Normal distribution
