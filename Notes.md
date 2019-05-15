@@ -1063,6 +1063,111 @@ $$\P_{H_0}\left[R_\alpha^{(S)}\right] \leq \sum_{j\in S}\P_{H_0}\left[R_{\alpha/
 
 This test also works for implicit testing (for example, $\beta_1 \geq \beta_2$).
 
+## Unit 7: Generalized Linear Models
+
+### Lecture 21: Introduction to Generalized Linear Models; Exponential Families
+
+The assumptions of a linear regression are:
+
+* The **noise is Gaussian**: $Y | \XX = \xx \sim \Norm_d(mu(\xx), \sigma^2)$,
+* The **regression function is linear**: $\mu(\xx) = \xx^\top \bbeta$.
+
+We want to relax both these assumptions for Generalized Linear Models, because some response random variables cannot fit in this framework (for example, a binary answer $Y \in \{0, 1\}$). Instead, we assume:
+
+* **Some distribution** for the noise: $Y | \XX = \xx \sim \mathcal{D}$,
+* A **link function** $g$ before the mean: $g(\mu(\xx)) = \xx^\top \bbeta$.
+
+**Exponential family**: a family of distributions $\{\P_\tth, \tth \in \Theta\}, \Theta \subseteq \R^k$ is said to be a **$k$-parameter exponential family** on $\R^d$, if there exist:
+
+* $\eta_1, \ldots, \eta_k, B: \Theta \rightarrow \R$,
+* $T_1, \ldots, T_k, h: \R^d \rightarrow \R$,
+
+such that the PMF/PDF of $\P_\tth$ can be written as:
+
+$$\tag{7.1} f_\tth(\yy) = h(\yy)\exp\left(\sum_{i=1}^k\eta_i(\tth)T_i(\yy) - B(\tth)\right) = h(\yy)\exp\left(\eeta(\tth)^\top \TT(\yy) - B(\tth)\right)$$
+
+For $k=1$ and $y \in \R$, there a **canonical exponential family** form:
+
+$$\tag{7.2} f_\theta(y) = \exp\left(\frac{y\theta - b(\theta)}{\phi} + c(y, \phi)\right)$$
+
+We will always assume that $\phi$ is known in this class; $\phi$ is called the **dispersion parameter**.
+
+Let $\ell(\theta) = \ln f_\theta(Y)$ be the log-likelihood of this distribution. The log-likelihood has the following properties:
+
+$$\E\left[\diff{\ell}{\theta}\right] = 0, \quad \E\left[\diffk{\ell}{\theta}{2}\right] + \E\left[\diff{\ell}{\theta}\right]^2 = 0$$
+
+When the distribution is written in the canonical form, we have:
+
+$$\tag{7.3}\ell(\theta) = \frac{Y\theta - b(\theta)}{\phi} + c(Y, \phi)$$
+
+Combined with the previous expression, we get the following expressions:
+
+$$\tag{7.4}\E[Y] = b'(\theta), \quad \V[Y] = \phi b''(\theta)$$
+
+### Lecture 22: GLM: Link Functions and the Canonical Link Function
+
+We need to link our model back to the parameter of interest, $\bbeta$. For that, we need a **link function** between our linear predictor and the mean parameter $\mu$:
+
+$$\tag{7.5}\XX^\top \bbeta = g(\mu(\XX))$$
+
+We require $g$ to be monotone increasing and differentiable.
+
+$g$ maps the domain of the parameter $\mu$ of the distribution to the entire real line (the range of $\XX^\top\bbeta$). For example:
+
+* For a linear model, $g$ is the identity.
+* For a Poisson distribution or an Exponential distribution ($\mu > 0$), we can use $g = \ln: (0, \infty) \rightarrow \R$.
+* For a Bernoulli distribution, we can use:
+    - The logit function $g: \mu \mapsto \ln(\frac{\mu}{1 - \mu})$,
+    - The probit function $g: \mu \mapsto \Psi^{-1}(\mu)$ ($\Psi$ being the normal CDF).
+
+The logit is the natural choice; such as model is called a **logistic regression**.
+
+The link $g$ mapping $\mu$ to the parameter $\theta$ is called the **canonical link**:
+
+$$\tag{7.6} g_c(\mu) = \theta$$
+
+As $\mu = b'(\theta)$,
+
+$$\tag{7.7} g_c(\mu) = (b')^{-1}(\mu)$$
+
+If $\phi > 0$, as $b''(\theta) = \phi\V[Y] > 0$, $b'$ is strictly increasing and $g_c$ is also **strictly increasing**.
+
+**Back to $\bbeta$**: let us consider $(\XX_1, Y_1), \ldots, (\XX_n, Y_n) \in \R^{p+1}$ i.i.d, such that the PDF of $Y_i | \XX_i = \xx_i$ has density i the canonical exponential family:
+
+$$\tag{7.8} f_{\theta_i}(y_i) = \exp\left(\frac{y_i\theta_i - b(\theta_i)}{\phi} + c(y_i, \phi)\right)$$
+
+Using the matrix notation $\YY = (Y_1, \ldots, Y_n)^\top$, $\X = (\XX_1, \ldots, \XX_n)^\top \in \R^{n\times p}$, the parameters $\theta_i$ are linked to $\beta$ via the following relations:
+
+$$\E[Y_i|X_i] = \mu_i = b'(\theta_i), \quad g(\mu_i) = \XX_i^\top \bbeta$$
+
+Therefore, given a link $g$:
+
+$$\tag{7.9}\theta_i = (b')^{-1}(g^{-1}(\XX_i^\top \bbeta)) = (g \circ b')^{-1}(\XX_i^\top \bbeta) = h(\XX_i^\top \bbeta)$$
+
+where $h = (g \circ b')^{-1}$. If $g$ is the **canonical link**, $h = \Id$.
+
+The log-likelihood is given by:
+
+$$\tag{7.10} \ell_n(\YY, \X, \bbeta) = \sum_{i=1}^n\frac{Y_ih(\XX_i^\top\bbeta) - b(h(\XX_i^\top\bbeta))}{\phi} + K$$
+
+If we use the **canonical link** $g_c$, then:
+
+$$\tag{7.11} \ell_n(\YY, \X, \bbeta) = \sum_{i=1}^n\frac{Y_i\XX_i^\top\bbeta - b(\XX_i^\top\bbeta)}{\phi} + K$$
+
+The Hessian of this expression is given by:
+
+$$\tag{7.12} \HH_\bbeta\ell_n(\bbeta) = -\frac1{\phi}\sum_{i=1}^nb''(\XX_i^\top\bbeta)\XX_i\XX_i^\top \prec 0$$
+
+Which means the log-likelihood is **strictly concave** when using the canonical link and $\phi > 0$. Therefore, the MLE is unique (if it exists).
+
+In general, there is no closed form for the MLE, but we can approximate it using optimization algorithms, such as the gradient descent.
+
+The MLE is also asymptotically normal:
+
+$$\tag{7.13}\sqrt{n}(\est\bbeta^{MLE} - \bbeta) \convd \Norm_p(\zz, I^{-1}(\bbeta))$$
+
+We can therefore apply our statistical tests (Wald's, likelihood ratio, …) to test hypotheses about our parameter (for example, the significance of some $\beta_i$).
+
 ## Addendum A: Frequent distributions
 
 ### Part 1: Normal distribution
@@ -1079,40 +1184,54 @@ Probability density function (*PDF*):
 
 $$\tag{A.1.1} f_{\mu, \sigma^2}(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac1{2\sigma^2}(x-\mu)^2\right)$$
 
-The cumulative density function (*CDF*) is noted $\Phi(x)$.
+The cumulative density function (*CDF*) for the standard normal distribution $Z \sim \Norm(0, 1)$ is noted $\Phi(x)$:
+
+$$\tag{A.1.2}\P[Z \leq x] = \Phi(x)$$
 
 ### Properties [A.1]
 
-Mean: $\E[Z] = \mu$
+Mean: $\E[X] = \mu$
 
-Variance: $\V[Z] = \sigma^2$
+Variance: $\V[X] = \sigma^2$
+
+To *normalize* a normal random variable:
+
+$$\tag{A.1.3}Z = \frac{X - \mu}{\sigma} \sim \Norm(0, 1)$$
 
 *Quantiles*:
 
-$$\tag{A.1.2} q_\alpha = \Phi^{-1}(1 - \alpha)$$
+$$\tag{A.1.4} q_\alpha = \Phi^{-1}(1 - \alpha)$$
 
-$$\tag{A.1.3} \P[Z \leq q_\alpha] = 1 - \alpha$$
+$$\tag{A.1.5} \P[Z \leq q_\alpha] = 1 - \alpha$$
 
-$$\tag{A.1.4} \P[|Z| \leq q_{\alpha/2}] = 1 - \alpha$$
+$$\tag{A.1.6} \P[|Z| \leq q_{\alpha/2}] = 1 - \alpha$$
 
 $q_{0.1} \approx 1.28155$, $q_{0.05} \approx 1.64485$, $q_{0.025} \approx 1.95996$,
 $q_{0.01} \approx 2.32635$, $q_{0.005} \approx 2.57583$.
 
 *Fischer information*:
 
-$$\tag{A.1.5} I(\mu, \sigma^2) = \begin{pmatrix} 1/\sigma^2 & 0 \\ 0 & 1/(2\sigma^4) \end{pmatrix}$$
+$$\tag{A.1.7} I(\mu, \sigma^2) = \begin{pmatrix} 1/\sigma^2 & 0 \\ 0 & 1/(2\sigma^4) \end{pmatrix}$$
 
 *Likelihood*:
 
-$$\tag{A.1.6} L_n(\Xton, \mu, \sigma^2) = \frac1{(2\pi\sigma^2)^{\frac{n}2}}\exp\left(-\frac1{2\sigma^2}\sum_{i=1}^n(X_i - \mu)^2\right)$$
+$$\tag{A.1.8} L_n(\Xton, \mu, \sigma^2) = \frac1{(2\pi\sigma^2)^{\frac{n}2}}\exp\left(-\frac1{2\sigma^2}\sum_{i=1}^n(X_i - \mu)^2\right)$$
 
 *Log-likelihood*:
 
-$$\tag{A.1.7} \ell_n(\Xton, \mu, \sigma^2) = -\frac{n}2\ln2\pi -\frac{n}2\ln\sigma^2 - \frac1{2\sigma^2}\sum_{i=1}^n(X_i - \mu)^2$$
+$$\tag{A.1.9} \ell_n(\Xton, \mu, \sigma^2) = -\frac{n}2\ln2\pi -\frac{n}2\ln\sigma^2 - \frac1{2\sigma^2}\sum_{i=1}^n(X_i - \mu)^2$$
 
 *Maximum likelihood estimator*:
 
-$$\tag{A.1.8} \hat\mu_n = \bar{X}_n, \quad \est{\sigma^2}_n = \frac1n\sum_{i=1}^n(X_i - \bar{X}_n)^2$$
+$$\tag{A.1.10} \hat\mu_n = \bar{X}_n, \quad \est{\sigma^2}_n = \frac1n\sum_{i=1}^n(X_i - \bar{X}_n)^2$$
+
+*Exponential family form*, $\tth = (\mu, \sigma^2)^\top$:
+
+$$\tag{A.1.11} f_{\mu, \sigma^2}(x) = \overbrace{\frac{1}{\sqrt{2\pi}}}^{h(x)}\exp\Big(\overbrace{\frac{\mu}{\sigma^2}x - \frac{1}{2\sigma^2}x^2}^{\eeta(\tth)^\top\TT(x)} - \overbrace{\frac{\mu^2}{2\sigma^2} - \frac12\ln(\sigma^2)}^{B(\tth)}\Big)$$
+
+*Canonical exponential form*, $\sigma^2$ known:
+
+$$\tag{A.1.12} f_{\theta}(x) = \exp\Bigg(\frac{x\theta - \overbrace{\frac{\theta^2}{2}}^{b(\theta)}}{\phi} \overbrace{- \frac{x^2}{2\phi} - \frac12\ln(2\pi\phi)}^{c(x, \phi)}\Bigg), \quad \theta = \mu, \phi = \sigma^2$$
 
 ### Moments [A.1]
 
@@ -1164,6 +1283,10 @@ $$\tag{A.2.3} \ell_n(\Xton, p) = \ln p\sum_{i=1}^nX_i + \ln(1-p)\left(n - \sum_{
 
 $$\tag{A.2.4} \hat{p}_n = \frac{\sum_iX_i}n$$
 
+*Canonical exponential form*:
+
+$$\tag{A.2.5} f_{\theta}(x) = \exp\big(x\theta - \overbrace{\ln(1 + e^\theta)}^{b(\theta)} + \overbrace{0}^{c(x, \phi)}\big), \quad \theta = \ln\left(\frac{p}{1-p}\right), \phi = 1$$
+
 ## Part 3: Binomial distribution
 
 ### Description [A.3]
@@ -1198,6 +1321,10 @@ $$\tag{A.3.3} \ell_n(\Xton, N, p) = \sum_{i=1}^n\ln\binom{N}{X_i} + \ln p \sum_{
 
 $$\tag{A.3.4} \hat{p}_n = \frac{\sum_iX_i}{nN}$$
 
+*Canonical exponential form*, $N$ known:
+
+$$\tag{A.3.5} f_{\theta}(x) = \exp\bigg(x\theta - \overbrace{N\ln(1 + e^\theta)}^{b(\theta)} + \overbrace{\ln\binom{N}{x}}^{c(x, \phi)}\bigg), \quad \theta = \ln\left(\frac{p}{1-p}\right) = \ln\left(\frac{\mu}{N-\mu}\right), \phi = 1$$
+
 ## Part 4: Categorical distribution
 
 ### Description [A.4]
@@ -1229,6 +1356,10 @@ $$\tag{A.4.2} \ell_n(\Xton, \pp) = \sum_{k=1}^KN_k\ln p_k$$
 *Maximum likelihood estimator* (under the constraint $\sum_kp_k = 1$):
 
 $$\tag{A.4.3} \forall k \in \lb 1, K \rb, \hat{\pp}_n = \left(\frac{N_1}n, \ldots, \frac{N_K}n\right)$$
+
+*Exponential family form*, $\tth = \pp$:
+
+$$\tag{A.4.4} f_{\pp}(x) = \overbrace{1}^{h(x)}\times \exp\bigg(\sum_{k=1}^K\overbrace{\ln(p_k)}^{\eta_k(\tth)}\overbrace{\one\{x = a_k\}}^{T_k(x)} - \overbrace{0}^{B(\tth)}\bigg)$$
 
 ## Part 5: Poisson distribution
 
@@ -1263,6 +1394,10 @@ $$\tag{A.5.3} \ell_n(\Xton, \lambda) = \ln\lambda\sum_{i=1}^nX_i - n\lambda - \s
 *Maximum likelihood estimator*:
 
 $$\tag{A.5.4} \hat{\lambda}_n = \bar{X}_n = \frac1n\sum_{i=1}^nX_i$$
+
+*Canonical exponential form*:
+
+$$\tag{A.5.5} f_{\theta}(x) = \exp\big(x\theta - \overbrace{e^\theta}^{b(\theta)} \overbrace{- \ln x!}^{c(x, \phi)}\big), \quad \theta = \ln \lambda, \phi = 1$$
 
 ## Part 6: Uniform distribution
 
@@ -1343,6 +1478,10 @@ $$\tag{A.7.4} \ell_n(\Xton, \lambda) = n\ln\lambda - \lambda\sum_{i=1}^nX_i+\ln\
 $$\tag{A.7.5} \hat{\lambda}_n = \frac{n}{\sum_iX_i} = \frac1{\bar{X}_n}$$
 
 Memorylessness: $\P[X > s+t | X > s] = \P[X > t]$
+
+*Canonical exponential form*:
+
+$$\tag{A.7.6} f_{\theta}(x) = \exp\big(x\theta - \overbrace{(-\ln(-\theta))}^{b(\theta)} + \overbrace{0}^{c(x, \phi)}\big), \quad \theta = -\lambda = -\frac1{\mu}, \phi = 1$$
 
 ## Part 8: Multivariate normal distribution
 
@@ -1454,7 +1593,7 @@ Useful for many test statistics as a pivot distribution.
 
 ### Description [A.12]
 
-Notation: $\beta(a, b)$
+Notation: $\mathcal{Beta}(a, b)$
 
 Parameters: $a, b \in (0, +\infty)$
 
@@ -1476,29 +1615,45 @@ Variance: $\V[X] = \frac{ab}{(a+b)^2(a+b+1)}$
 
 Useful as the *Bayesian conjugate for Bernoulli distributions*.
 
+*Exponential family form*, $\tth = (a, b)^\top$:
+
+$$\tag{A.12.2} f_{a, b}(x) = \overbrace{1}^{h(x)}\times \exp\big(\overbrace{(a-1)\ln(x) + (b-1)\ln(1-x)}^{\eeta(\tth)^\top\TT(x)} - \overbrace{\ln(B(a, b))}^{B(\tth)}\big)$$
+
 ## Part 13: Gamma distribution
 
 ### Description [A.13]
 
-Notation: $\mathcal{Gamma}(\alpha, \beta)$
+Notation: $\mathcal{Gamma}(\alpha, \beta), \mathcal{Gamma}(k, \tau)$
 
-Parameters: $\alpha, \beta \in (0, +\infty)$
+Parameters: $\alpha, \beta; k, \tau \in (0, +\infty)$
 
 Support: $E = (0, +\infty)$
 
 Probability density function (*PDF*):
 
-$$\tag{A.13.1} f_{\alpha, \beta}(x) = \frac{\beta^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{-\beta x}$$
+$$\tag{A.13.1} f_{\alpha, \beta}(x) = \frac{\beta^\alpha}{\Gamma(\alpha)}x^{\alpha-1}\exp(-\beta x), \quad f_{k, \tau}(x) = \frac{1}{\Gamma(k)\tau^k}x^{k-1}\exp\left(-\frac{x}\tau\right)$$
 
 ### Properties [A.13]
 
-Mean: $\E[X] = \frac{\alpha}{\beta}$
+Mean: $\E[X] = \frac{\alpha}{\beta} = k\tau$
 
-Mode: $\Mode(X) = \frac{\alpha - 1}{\beta}$
+Mode: $\Mode(X) = \frac{\alpha - 1}{\beta} = (k-1)\tau$
 
-Variance: $\V[X] = \frac{\alpha}{\beta^2}$
+Variance: $\V[X] = \frac{\alpha}{\beta^2} = k\tau^2$
 
 Useful as the *Bayesian conjugate for exponential distributions*.
+
+*Exponential family form*, $\tth = (\alpha, \beta)^\top$:
+
+$$\tag{A.13.2} f_{\alpha, \beta}(x) = \overbrace{1}^{h(x)}\times \exp\big(\overbrace{(\alpha-1)\ln(x) -\beta x}^{\eeta(\tth)^\top\TT(x)} - \overbrace{(-\alpha \ln\beta  + \ln\Gamma(\alpha))}^{B(\tth)}\big)$$
+
+*Exponential family form*, $\tth = (k, \tau)^\top$:
+
+$$\tag{A.13.3} f_{k, \tau}(x) = \overbrace{1}^{h(x)}\times \exp\bigg(\overbrace{(k-1)\ln(x) -\frac1\tau x}^{\eeta(\tth)^\top\TT(x)} - \overbrace{(k \ln\tau  + \ln\Gamma(k))}^{B(\tth)}\bigg)$$
+
+*Canonical exponential form*, $\alpha$ known:
+
+$$\tag{A.13.4} f_{\theta}(x) = \exp\big(x\theta - \overbrace{(-\alpha\ln(-\theta))}^{b(\theta)} + \overbrace{(\alpha - 1)\ln x - \ln \Gamma(\alpha)}^{c(x, \phi)}\big), \quad \theta = -\beta = -\frac\alpha\mu, \phi = 1$$
 
 # Addendum B: Notable relations
 
@@ -1506,8 +1661,7 @@ Useful as the *Bayesian conjugate for exponential distributions*.
 
 ### Probability, density and expectation
 
-A probability space is a triplet $(\Omega, \mathcal{F}, P)$ where $\Omega$ is the set of possible outcomes, $\mathcal{F}$ a set of subsets of $\Omega$ such as $(\Omega, \mathcal{F})$ is measurable and $P: \mathcal{F} \rightarrow [0, 1]$ is the probability function such as it is (countably) additive and $P
-(\Omega) = 1$.
+A probability space is a triplet $(\Omega, \mathcal{F}, P)$ where $\Omega$ is the set of possible outcomes, $\mathcal{F}$ a set of subsets of $\Omega$ such as $(\Omega, \mathcal{F})$ is measurable and $P: \mathcal{F} \rightarrow [0, 1]$ is the probability function such as it is (countably) additive and $P(\Omega) = 1$.
 
 A **random variable** $X$ is a function:
 
@@ -1519,13 +1673,13 @@ $$\tag{B.1.2}\P[X \in S] = P(\{\omega \in \Omega | X(\omega) \in S\})$$
 
 If $E$ is discrete, we can define the **Probability Mass Function (*PMF*)** $p_X: E \rightarrow [0,1]$ of $X$:
 
-$$\tag{B.1.3}\forall x \in E, p_X(x) = \P[X = x] = P(\{X^{-1}(x)\})$$
+$$\tag{B.1.3}\forall x \in E, p_X(x) = \P[X = x] = P(X^{-1}(\{x\}))$$
 
 If $E \subseteq \R$, we can defin the **Cumulative Density Function (*CDF*)** $F_X: E \rightarrow [0,1]$ of $X$:
 
 $$\tag{B.1.4}\forall x \in E, F_X(x) = \P[X \leq x] = P(X^{-1}((-\infty, x])))$$
 
-And the **Probability Density Function (*PDF*)** $f_X: E \rightarrow [0,+\infty)$ is defined by:
+If $F_X$ is differentiable, the **Probability Density Function (*PDF*)** $f_X: E \rightarrow [0,+\infty)$ is defined by:
 
 $$\tag{B.1.5}f_X(x) = F_X'(x)$$
 
@@ -1541,7 +1695,7 @@ Given a function $g : E \rightarrow F \subseteq \R$ bijective and continuously d
 
 $$\tag{B.1.8}F_Y(y) = \P[Y \leq y] = \P[g(X) \leq g(x)] = \begin{cases}
     \P[X \leq x] = F_X(x) & \text{ if }g\text{ is increasing} \\
-    \P[X \geq x] = = 1 - F_X(x) & \text{ if }g\text{ is decreasing}
+    \P[X \geq x] = 1 - F_X(x) & \text{ if }g\text{ is decreasing}
 \end{cases}$$
 
 Therefore:
@@ -1559,7 +1713,7 @@ Combining this result with the change of variable $y = g(x)$ yields the **Law of
 
 $$\tag{B.1.10}\E[g(X)] = \int_0^1ydF_Y(y) = \int_Eg(x)f_X(x)dx$$
 
-**Expectation properties**, given $X, Y$ random variables and $a, b \in \R$:
+**Expectation properties**: given $X, Y$ random variables and $a, b \in \R$:
 
 $$\tag{B.1.11} \begin{cases}
     X \overset{a.s.}{=} Y \implies \E[X] = \E[Y] \\
@@ -1568,7 +1722,7 @@ $$\tag{B.1.11} \begin{cases}
     \E[aX + bY] = a\E[X] + b\E[Y]
 \end{cases}$$
 
-**Jensen's Inequality**, given a function $\phi$ convex:
+**Jensen's Inequality**: given a function $\phi$ convex:
 
 $$\tag{B.1.12}\varphi(\E[X]) \leq \E[\varphi(X)]$$
 
@@ -1576,23 +1730,24 @@ $$\tag{B.1.12}\varphi(\E[X]) \leq \E[\varphi(X)]$$
 
 The **variance** of a random variable $X$ is defined by:
 
-$$\tag{B.1.13}\V[X] = \E[(X - \E[X])^2] = \E[X^2 - 2X\E[X] + \E[X]^2] = \E[X^2] - 2\E[X]\E[X] + \E[X]^2 = \E[X^2] - \E[X]^2$$
+$$\tag{B.1.13}\begin{aligned}\V[X] &= \E[(X - \E[X])^2] \\&= \E[X^2 - 2X\E[X] + \E[X]^2] \\&= \E[X^2] - 2\E[X]\E[X] + \E[X]^2 \\&= \E[X^2] - \E[X]^2\end{aligned}$$
 
-**Variance properties**, with $X$ a random variable and $a \in \R$:
+**Variance properties**: with $X$ a random variable and $a \in \R$:
 
 $$\tag{B.1.14}\begin{cases}
-    \V[X + a] = \V[X]
+    \V[X + a] = \V[X] \\
     \V[aX] = a^2\V[X]
+\end{cases}$$
 
 The **covariance** of two random variables $X$ and $Y$ is defined by:
 
-$$\tag{B.1.15}\Cov(X, Y) = \E[(X - \E[X])(Y - \E[Y])] = \E[XY] - \E[X]\E[Y] = \E[X(Y - \E[Y])] = \E[(X - \E[X])Y]$$
+$$\tag{B.1.15}\begin{aligned}\Cov(X, Y) &= \E[(X - \E[X])(Y - \E[Y])] \\&= \E[XY] - \E[X]\E[Y] \\&= \E[X(Y - \E[Y])] \\&= \E[(X - \E[X])Y]\end{aligned}$$
 
 In particular,
 
 $$\tag{B.1.16}\Cov(X, X) = \V[X]$$
 
-**Covariance properties**, with $X, Y, Z$ random variables, and $a, b, c \in \R$:
+**Covariance properties**: with $X, Y, Z$ random variables, and $a, b, c \in \R$:
 
 $$\tag{B.1.17}\begin{cases}
     \Cov(X, a) = 0 \\
@@ -1602,19 +1757,27 @@ $$\tag{B.1.17}\begin{cases}
 
 In particular,
 
-$$\tag{B.1.18}\V[X+Y] = \V[X] + \V[Y] + 2\Cov(X, Y)$$
+$$\tag{B.1.18}\V[X\pm Y] = \V[X] + \V[Y] \pm 2\Cov(X, Y)$$
 
-Two random variables $X, Y$ are **independent** ($X \perp \!\!\! \perp Y$) if
+The **covariance matrix** of a vector random variable $\XX \in \R^d$ is defined as:
 
-$$\tag{B.1.18}X \perp \!\!\! \perp Y \iff F_{X,Y}(x, y) = F_X(x)F_Y(y) \iff f_{X,Y}(x,y) = f_X(x)f_Y(y)$$
+$$\tag{B.1.19}\CCov(\XX) = \E\left[(\XX - \E[\XX])(\XX - \E[\XX])^\top\right] \in \R^{d\times d}$$
 
-Therefore, if $X \perp\!\!\!\perp Y$, then
+**Covariance matrix properties**: with $A \in \R^{k\times d}, B \in \R^k$:
 
-$$\tag{B.1.19} \E[XY] = \E[X]\E[Y]$$
+$$\tag{B.1.20} \CCov(A\XX + B) = \CCov(A\XX) = A\CCov(\XX)A^\top \in \R^{k\times k}$$
+
+Two random variables $X, Y$ are **independent** ($X \perp Y$) if
+
+$$\tag{B.1.21}X \perp Y \iff F_{X,Y}(x, y) = F_X(x)F_Y(y) \iff f_{X,Y}(x,y) = f_X(x)f_Y(y)$$
+
+Therefore, if $X \perp Y$, then
+
+$$\tag{B.1.22} \E[XY] = \E[X]\E[Y]$$
 
 But **the converse isn't true in general**. It follows that:
 
-$$\tag{B.1.20}\begin{cases}
+$$\tag{B.1.23}\begin{cases}
     \Cov(X, Y) = 0 \\
     \V[X+Y] = \V[X] + \V[Y]
 \end{cases}$$
@@ -1623,9 +1786,9 @@ $$\tag{B.1.20}\begin{cases}
 
 The *p-value* is formally defined as:
 
-$$\tag{B.1.21} \pval = \P[\mathcal{D} \geq T_n | T_n]$$
+$$\tag{B.1.24} \pval = \P[\mathcal{D} \geq T_n | T_n]$$
 
-Where $T_n$ is the test statistics and $\mathcal{D}$ is the test distribution ($\Norm(0,1)$ for an asymptotic test).
+Where $T_n$ is the test statistics and $\mathcal{D}$ is the test distribution of $T_n$.
 
 ## Probability
 
