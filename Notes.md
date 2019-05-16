@@ -946,7 +946,7 @@ $$\tag{6.4} Y_i = \true a + \true b X_i + \varepsilon_i$$
 
 The **Least Squares Estimator (*LSE*)** of $(\true a, \true b)$ is the minimizer of the squared sum:
 
-$$\tag{6.5} (\estn a, \estn b) = \argmin{(a, b) \in \R^2}\sum_{i=1}^n(Y_i - a - bX)^2$$
+$$\tag{6.5} (\estn a, \estn b) = \argmin{(a, b) \in \R^2}\sum_{i=1}^n(Y_i - a - bX_i)^2$$
 
 The estimators are given by:
 
@@ -1069,7 +1069,7 @@ This test also works for implicit testing (for example, $\beta_1 \geq \beta_2$).
 
 The assumptions of a linear regression are:
 
-* The **noise is Gaussian**: $Y | \XX = \xx \sim \Norm_d(mu(\xx), \sigma^2)$,
+* The **noise is Gaussian**: $Y | \XX = \xx \sim \Norm_d(\mu(\xx), \sigma^2)$,
 * The **regression function is linear**: $\mu(\xx) = \xx^\top \bbeta$.
 
 We want to relax both these assumptions for Generalized Linear Models, because some response random variables cannot fit in this framework (for example, a binary answer $Y \in \{0, 1\}$). Instead, we assume:
@@ -1086,7 +1086,7 @@ such that the PMF/PDF of $\P_\tth$ can be written as:
 
 $$\tag{7.1} f_\tth(\yy) = h(\yy)\exp\left(\sum_{i=1}^k\eta_i(\tth)T_i(\yy) - B(\tth)\right) = h(\yy)\exp\left(\eeta(\tth)^\top \TT(\yy) - B(\tth)\right)$$
 
-For $k=1$ and $y \in \R$, there a **canonical exponential family** form:
+For $k=1$ and $y \in \R$, the **canonical exponential family** form is a special form of the 1-parameter exponential family:
 
 $$\tag{7.2} f_\theta(y) = \exp\left(\frac{y\theta - b(\theta)}{\phi} + c(y, \phi)\right)$$
 
@@ -1132,7 +1132,7 @@ $$\tag{7.7} g_c(\mu) = (b')^{-1}(\mu)$$
 
 If $\phi > 0$, as $b''(\theta) = \phi\V[Y] > 0$, $b'$ is strictly increasing and $g_c$ is also **strictly increasing**.
 
-**Back to $\bbeta$**: let us consider $(\XX_1, Y_1), \ldots, (\XX_n, Y_n) \in \R^{p+1}$ i.i.d, such that the PDF of $Y_i | \XX_i = \xx_i$ has density i the canonical exponential family:
+**Back to $\bbeta$**: let us consider $(\XX_1, Y_1), \ldots, (\XX_n, Y_n) \in \R^{p+1}$ i.i.d, such that the PDF of $Y_i | \XX_i = \xx_i$ has density in the canonical exponential family:
 
 $$\tag{7.8} f_{\theta_i}(y_i) = \exp\left(\frac{y_i\theta_i - b(\theta_i)}{\phi} + c(y_i, \phi)\right)$$
 
